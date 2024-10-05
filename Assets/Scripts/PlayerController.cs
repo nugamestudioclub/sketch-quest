@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -19,9 +20,11 @@ public class PlayerController : MonoBehaviour
     private bool canAirDash;
     private float currentDashDuration = float.MaxValue;
     private Vector2 dashDirection;
+    private bool facingRight;
 
-    [SerializeField] Rigidbody2D playerBody;
-    [SerializeField] Collider2D playerCollider;
+    [SerializeField] private Rigidbody2D playerBody;
+    [SerializeField] private Collider2D playerCollider;
+    [SerializeField] private SpriteRenderer spriteRenderer; 
 
     [SerializeField] private float fallingGravity;
     [SerializeField] private float risingGravity;
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
         HandleJump();
         HandleRunning();
         HandleDashing();
+        HandleFacing();
         
         tryingToDash = false;
         tryingToJump = false;
@@ -113,7 +117,13 @@ public class PlayerController : MonoBehaviour
     {
         playerBody.gravityScale = 0;
         dashDirection = new Vector2(moveInputDirection * dashSpeed, 0);
+        
+        if (Mathf.Approximately(moveInputDirection, 0))
+        {
+            dashDirection = new Vector2(facingRight? dashSpeed: -dashSpeed, 0);
+        }
         currentDashDuration = 0;
+        
         playerBody.velocity = dashDirection;
     }
 
@@ -152,6 +162,17 @@ public class PlayerController : MonoBehaviour
             canAirDash = true;  
         }
     }
+
+    public void HandleFacing()
+    {
+        float currentXVelocity = playerBody.velocity.x;
+        if (!Mathf.Approximately(currentXVelocity, 0))
+        {
+            facingRight = currentXVelocity > 0;
+            spriteRenderer.flipX = !facingRight;
+        }
+    }
+    
     public bool IsFalling => !IsDashing && (playerBody.velocity.y < gravityChangeSpeed || !holdingJump);
     public bool IsDashing => currentDashDuration < dashTime;
 }
