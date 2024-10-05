@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Rigidbody2D playerBody;
     [SerializeField] private Collider2D playerCollider;
-    [SerializeField] private SpriteRenderer spriteRenderer; 
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private PlayerAnimation playerAnimator;
 
     [SerializeField] private float fallingGravity;
     [SerializeField] private float risingGravity;
@@ -53,12 +54,14 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         HandleGrounded();
+        HandleRunning();
+        
         if (IsFalling)
         {
             Fall();
         }
+        
         HandleJump();
-        HandleRunning();
         HandleDashing();
         HandleFacing();
         
@@ -69,13 +72,20 @@ public class PlayerController : MonoBehaviour
     private void HandleRunning()
     {
         float currentXVelocity = playerBody.velocity.x;
-        
         if(tryingToMove)
         {
+            if (isGrounded)
+            {
+                playerAnimator.PlayRun();
+            }
             playerBody.velocity = new Vector2(moveInputDirection * moveSpeed, playerBody.velocity.y);
         }
         else if (!Mathf.Approximately(currentXVelocity, 0))
         {
+            if (isGrounded)
+            {
+                playerAnimator.PlayIdle();
+            }
             playerBody.velocity = new Vector2(Mathf.Lerp(currentXVelocity, 0, runningFalloff), playerBody.velocity.y);
         }
     }
@@ -86,10 +96,10 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(GroundCheckOffset(playerCollider),groundCheckRadius);
     }
 
-    private Vector2 GroundCheckOffset(Collider2D collider2D)
+    private Vector2 GroundCheckOffset(Collider2D bullshit)
     {
-        
-        return new Vector2(collider2D.bounds.center.x, collider2D.bounds.min.y);
+        var bounds = bullshit.bounds;
+        return new Vector2(bounds.center.x, bounds.min.y);
     }
 
     private void HandleJump()
@@ -98,10 +108,12 @@ public class PlayerController : MonoBehaviour
         {
             if (isGrounded)
             {
+                playerAnimator.PlayJump();
                 Jump();
             }
             else if(UnlockedDoubleJump && !isGrounded && canDoubleJump)
             {
+                playerAnimator.PlayDoubleJump();
                 Jump();
                 canDoubleJump = false; 
             }
@@ -149,6 +161,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Fall()
     {
+        playerAnimator.PlayFall();
         playerBody.gravityScale = fallingGravity;
     }
 
