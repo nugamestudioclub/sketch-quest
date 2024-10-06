@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fallingGravity;
     [SerializeField] private float risingGravity;
     [SerializeField] private float dashingGravity;
-    [FormerlySerializedAs("gravityChangeHeight")][SerializeField] private float gravityChangeSpeed;
+    [SerializeField] private float gravityChangeSpeed;
 
     [field: SerializeField] public bool UnlockedDoubleJump { get; set; }
     [field: SerializeField] public bool UnlockedDash { get; set; }
@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleBomb()
     {
-        if (tryingToBomb)
+        if (UnlockedBomb && tryingToBomb)
         {
             Bomb();
         }

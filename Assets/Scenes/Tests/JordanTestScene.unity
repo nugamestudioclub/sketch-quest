@@ -1066,25 +1066,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1169902960702225185, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7884685562353507938, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
-      propertyPath: <ThrowPower>k__BackingField
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7884685562353507938, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
-      propertyPath: <UnlockedBomb>k__BackingField
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8485771899660686448, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8485771899660686448, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

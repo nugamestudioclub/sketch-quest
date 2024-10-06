@@ -14,9 +14,11 @@ public class GameLogic
         float throwAngleDegrees = player.ThrowAngleDegrees;
         Vector2 playerPosition = player.Position;
 
-        float adjustedThrowAngleDegrees = playerFacingRight ? throwAngleDegrees : (throwAngleDegrees + 180) % 360;
-        float adjustedThrowAngleRadians = Mathf.Deg2Rad* adjustedThrowAngleDegrees;
-        Vector2 throwVector = new Vector2(math.cos(adjustedThrowAngleRadians), math.sin(adjustedThrowAngleRadians)) * throwPower;
+
+        float throwAngleRadians = Mathf.Deg2Rad* throwAngleDegrees;
+        float throwDirectionX = playerFacingRight ? math.cos(throwAngleRadians) : -math.cos(throwAngleRadians);
+        float throwDirectionY = math.sin(throwAngleRadians);
+        Vector2 throwVector = new Vector2(throwDirectionX, throwDirectionY) * throwPower;
         Vector2 finalThrowVelocity = playerVelocity + throwVector;
 
         bomb.Spawn(playerPosition);
