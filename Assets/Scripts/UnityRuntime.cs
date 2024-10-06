@@ -65,7 +65,7 @@ public class UnityRuntime : MonoBehaviour {
 	private static void OnBeforeSceneLoad() {
 		var config = Resources.Load<GameConfig>(GAME_CONFIG);
 		GameEngine = new(config);
-		var runtime = Instantiate(config.Runtime);
+		var runtime = Instantiate(config.runtime);
 		DontDestroyOnLoad(runtime);
 	}
 }

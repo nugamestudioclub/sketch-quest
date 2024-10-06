@@ -11,7 +11,7 @@ public class GameEngine {
     
 	public GameEngine(GameConfig config)
 	{
-		Bomb = GameObject.Instantiate(config.Bomb);
+		Bomb = GameObject.Instantiate(config.bomb);
 		AbilityCodes = config.AbilityCodes;
 
 	}

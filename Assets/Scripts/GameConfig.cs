@@ -6,10 +6,10 @@ using UnityEngine;
 	menuName = "Config/" + nameof(GameConfig))
 ]
 public class GameConfig : ScriptableObject {
-	[field: SerializeField]
-	public GameObject Runtime { get; private set; }
 
-	[field: SerializeField] public GameObject Bomb { get; private set; }
+	public GameObject runtime;
+
+	public GameObject bomb;
 
 	private AbilityCode[] _abilityCodes;
 
