@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,17 +11,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashTime = 1;
     [SerializeField] private float groundCheckRadius;
     [SerializeField, Range(0, 1)] private float runningFalloff;
-
+    [field:SerializeField, Range(0, 360)] public float ThrowAngleDegrees { get; private set; } = 45;
+    [field:SerializeField] public float ThrowPower { get; private set; }
+    
     private float moveInputDirection;
     private bool tryingToJump;
     private bool tryingToDash;
+    private bool tryingToBomb;
     private bool holdingJump;
     private bool isGrounded = false;
     private bool canDoubleJump;
     private bool canAirDash;
     private float currentDashDuration = float.MaxValue;
     private Vector2 dashDirection;
-    private bool facingRight;
     private bool isJumping;
     private bool isDoubleJumping;
 
@@ -34,13 +37,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashingGravity;
     [FormerlySerializedAs("gravityChangeHeight")][SerializeField] private float gravityChangeSpeed;
 
-    [field: SerializeField] bool UnlockedDoubleJump { get; set; }
-    [field: SerializeField] bool UnlockedDash { get; set; }
+    [field: SerializeField] public bool UnlockedDoubleJump { get; set; }
+    [field: SerializeField] public bool UnlockedDash { get; set; }
+    [field: SerializeField] public bool UnlockedBomb { get; set; }
     private bool IsTryingToMove => !Mathf.Approximately(moveInputDirection, 0);
 
     private bool IsMovingHorizontally => !Mathf.Approximately(playerBody.velocity.x, 0);
     public bool IsFalling => !IsDashing && (playerBody.velocity.y < gravityChangeSpeed || !holdingJump);
     public bool IsDashing => currentDashDuration < dashTime;
+    public Vector2 Velocity => playerBody.velocity;
+    public Vector2 Position => transform.position;
+    public bool FacingRight { get; private set; }
 
     void Update()
     {
@@ -56,6 +63,10 @@ public class PlayerController : MonoBehaviour
 		if( !tryingToDash ) {
             tryingToDash = input.IsDown(InputButton.Dash);
 		}
+        
+        if( !tryingToBomb ) {
+            tryingToBomb = input.IsDown(InputButton.Bomb);
+        }
 		HandleAnimation();
 	}
 
@@ -72,6 +83,7 @@ public class PlayerController : MonoBehaviour
         HandleJump();
         HandleDashing();
         HandleFacing();
+        HandleBomb();
 
         ClearStaleInputs();
     }
@@ -80,6 +92,7 @@ public class PlayerController : MonoBehaviour
     {
         tryingToDash = false;
         tryingToJump = false;
+        tryingToBomb = false;
     }
     private void HandleRunning()
     {
@@ -93,8 +106,6 @@ public class PlayerController : MonoBehaviour
             playerBody.velocity = new Vector2(Mathf.Lerp(currentXVelocity, 0, runningFalloff), playerBody.velocity.y);
         }
     }
-
-
 
     private void OnDrawGizmosSelected()
     {
@@ -135,7 +146,7 @@ public class PlayerController : MonoBehaviour
     private void Dash()
     {
         playerBody.gravityScale = dashingGravity;
-        dashDirection = new Vector2(facingRight ? dashSpeed : -dashSpeed * dashSpeed, 0);
+        dashDirection = new Vector2(FacingRight ? dashSpeed : -dashSpeed * dashSpeed, 0);
         currentDashDuration = 0;
         playerBody.velocity = dashDirection;
     }
@@ -180,8 +191,8 @@ public class PlayerController : MonoBehaviour
     {
         if (IsTryingToMove)
         {
-            facingRight = moveInputDirection > 0;
-            spriteRenderer.flipX = !facingRight;
+            FacingRight = moveInputDirection > 0;
+            spriteRenderer.flipX = !FacingRight;
         }
     }
 
@@ -218,4 +229,19 @@ public class PlayerController : MonoBehaviour
             playerAnimator.Play(PlayerAnimationType.Fall);
         }
     }
+
+    private void HandleBomb()
+    {
+        if (tryingToBomb)
+        {
+            Bomb();
+        }
+    }
+
+    private void Bomb()
+    {
+        Bomb bomb = UnityRuntime.GameEngine.Bomb.GetComponent<Bomb>();
+        UnityRuntime.GameEngine.Logic.ThrowBomb(this, bomb);
+    }
+    
 }

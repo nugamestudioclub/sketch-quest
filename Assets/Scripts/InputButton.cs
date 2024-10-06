@@ -4,4 +4,5 @@
 	Cancel,
 	Jump,
 	Dash,
+	Bomb,
 }

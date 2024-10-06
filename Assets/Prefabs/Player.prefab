@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 183610148054478711}
   - component: {fileID: 2610675159275757444}
   - component: {fileID: 8476743216966771974}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 1897602710377370482}
   - component: {fileID: 8238182342549702195}
   - component: {fileID: 7884685562353507938}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,12 +235,16 @@ MonoBehaviour:
   dashTime: 0.2
   groundCheckRadius: 0.35
   runningFalloff: 0.1
+  <ThrowAngleDegrees>k__BackingField: 45
+  <ThrowPower>k__BackingField: 0
   playerBody: {fileID: 8238182342549702195}
   playerCollider: {fileID: 1897602710377370482}
   spriteRenderer: {fileID: 183610148054478711}
   playerAnimator: {fileID: 8476743216966771974}
   fallingGravity: 8
   risingGravity: 4
+  dashingGravity: 0
   gravityChangeSpeed: 0
   <UnlockedDoubleJump>k__BackingField: 0
   <UnlockedDash>k__BackingField: 0
+  <UnlockedBomb>k__BackingField: 0
