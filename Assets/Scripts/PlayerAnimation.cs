@@ -1,53 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerAnimationType
+{
+    Idle, Run, Jump, DoubleJump, Dash, Bomb, Platform, Fall, DoubleFall
+}
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    public void PlayIdle()
+    public void Play(PlayerAnimationType type)
     {
-        animator.Play("Idle");
-    }
-    
-    public void PlayRun()
-    {
-        animator.Play("Run");
-    }
-    
-    public void PlayJump()
-    {
-        animator.Play("Jump");
-    }
-    
-    public void PlayDoubleJump()
-    {
-        animator.Play("DoubleJump");
-    }
-    
-    public void PlayDash()
-    {
-        animator.Play("Dash");
-    }
-    
-    public void PlayBomb()
-    {
-        animator.Play("Bomb");
-    }
-    
-    public void PlayPlatform()
-    {
-        animator.Play("Platform");
+        animator.Play(Enum.GetNames(typeof(PlayerAnimationType))[(int)type]);
+        Debug.Log($"Animation Playing: {Enum.GetNames(typeof(PlayerAnimationType))[(int)type]}");
     }
 
-    public void PlayFall()
+    public bool IsTypePlaying (PlayerAnimationType type)
     {
-        var animationInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (!animationInfo.IsName("Jump") && !animationInfo.IsName("DoubleJump") && !animationInfo.IsName("DoubleFall"))
-        {
-            animator.Play("Fall");
-        }
+        return IsPlaying && animator.GetCurrentAnimatorStateInfo(0).IsName(Enum.GetNames(typeof(PlayerAnimationType))[(int)type]);
     }
-    
+
+    public bool IsPlaying => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0;
 }

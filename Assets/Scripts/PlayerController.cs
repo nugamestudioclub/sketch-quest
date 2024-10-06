@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private float currentDashDuration = float.MaxValue;
     private Vector2 dashDirection;
     private bool facingRight;
+    private bool isJumping;
+    private bool isDoubleJumping;
 
     [SerializeField] private Rigidbody2D playerBody;
     [SerializeField] private Collider2D playerCollider;
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
         {
             tryingToDash = Input.GetKeyDown(KeyCode.LeftShift);
         }
+        HandleAnimation();
     }
 
     private void FixedUpdate()
@@ -74,21 +77,15 @@ public class PlayerController : MonoBehaviour
         float currentXVelocity = playerBody.velocity.x;
         if(tryingToMove)
         {
-            if (isGrounded)
-            {
-                playerAnimator.PlayRun();
-            }
             playerBody.velocity = new Vector2(moveInputDirection * moveSpeed, playerBody.velocity.y);
         }
-        else if (!Mathf.Approximately(currentXVelocity, 0))
+        else if (IsMovingHorizontally)
         {
-            if (isGrounded)
-            {
-                playerAnimator.PlayIdle();
-            }
             playerBody.velocity = new Vector2(Mathf.Lerp(currentXVelocity, 0, runningFalloff), playerBody.velocity.y);
         }
     }
+
+    private bool IsMovingHorizontally => !Mathf.Approximately(playerBody.velocity.x, 0);
     
     private void OnDrawGizmosSelected()
     { 
@@ -108,17 +105,18 @@ public class PlayerController : MonoBehaviour
         {
             if (isGrounded)
             {
-                playerAnimator.PlayJump();
                 Jump();
+                isJumping = true;
             }
             else if(UnlockedDoubleJump && !isGrounded && canDoubleJump)
             {
-                playerAnimator.PlayDoubleJump();
                 Jump();
-                canDoubleJump = false; 
+                canDoubleJump = false;
+                isDoubleJumping = true;
             }
         }
     }
+    
     private void Jump()
     {
         float velocityY = Mathf.Max(playerBody.velocity.y, 0) + jumpHeight;
@@ -161,7 +159,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Fall()
     {
-        playerAnimator.PlayFall();
         playerBody.gravityScale = fallingGravity;
     }
 
@@ -176,7 +173,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void HandleFacing()
+    private void HandleFacing()
     {
         float currentXVelocity = playerBody.velocity.x;
         if (!Mathf.Approximately(currentXVelocity, 0))
@@ -185,6 +182,57 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = !facingRight;
         }
     }
+
+    private void HandleAnimation()
+    {
+        //if you have activated jump, wait for that animation to complete - do nothing
+        if (isJumping && !playerAnimator.IsTypePlaying(PlayerAnimationType.Jump))
+        {
+            playerAnimator.Play(PlayerAnimationType.Jump); 
+            isJumping = false; 
+        }
+        else if (isDoubleJumping && !playerAnimator.IsTypePlaying(PlayerAnimationType.DoubleJump))
+        {
+            playerAnimator.Play(PlayerAnimationType.DoubleJump);
+            isDoubleJumping = false; 
+        }
+        else if (IsDashing && !playerAnimator.IsTypePlaying(PlayerAnimationType.Dash))
+        {
+            playerAnimator.Play(PlayerAnimationType.Dash);
+        }
+        else if (isGrounded && IsMovingHorizontally)
+        {
+            playerAnimator.Play(PlayerAnimationType.Run);
+        }
+        else if (isGrounded)
+        {
+            playerAnimator.Play(PlayerAnimationType.Idle);
+        }
+        else if (isDoubleJumping)
+        {
+            playerAnimator.Play(PlayerAnimationType.DoubleFall);
+        }
+        else if (!playerAnimator.IsTypePlaying(PlayerAnimationType.DoubleJump) && !playerAnimator.IsTypePlaying(PlayerAnimationType.Dash))
+        {
+            playerAnimator.Play(PlayerAnimationType.Fall);
+        }
+        
+        //if activate double jump, do nothing until it is complete
+        //if activate dash, do nothing until it is complete
+        
+        //otherwise
+        
+        //if you're grounded and not moving, idle 
+        //if you're grounded and moving, run
+        //if you're not grounded and doublejump happened, play doublejump fall
+        
+        //otherwise
+        
+        //play fall 
+    }
+    
+    
+    
     
     public bool IsFalling => !IsDashing && (playerBody.velocity.y < gravityChangeSpeed || !holdingJump);
     public bool IsDashing => currentDashDuration < dashTime;
