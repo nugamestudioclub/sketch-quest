@@ -16,6 +16,13 @@ public class GameConfig : ScriptableObject {
 
 	[SerializeField]
 	private AbilityCode[] _abilityCodes = Array.Empty<AbilityCode>();
+	
+	public Drawing drawing;
+
+	[SerializeField]
+	private InputButtonCode[] _inputButtonCodes = Array.Empty<InputButtonCode>();
 
 	public ReadOnlyCollection<AbilityCode> AbilityCodes => new(_abilityCodes);
+
+	public ReadOnlyCollection<InputButtonCode> InputButtonCodes => new(_inputButtonCodes);
 }

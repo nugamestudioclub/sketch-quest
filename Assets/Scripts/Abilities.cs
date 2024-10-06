@@ -4,7 +4,7 @@ public enum AbilityKind {
 	None,
 	Bomb,
 	Dash,
-	Jump,
+	DoubleJump,
 	Platform,
 }
 

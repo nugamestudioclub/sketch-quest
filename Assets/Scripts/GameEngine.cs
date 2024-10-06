@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
@@ -11,15 +12,21 @@ public class GameEngine {
 
     public GameObject Explosion { get; private set; }
 
-    public GameEngine(GameConfig config)
-	{
+	public Drawing Drawing { get; private set; }
 
+	public ReadOnlyCollection<InputButtonCode> InputButtonCodes { get; }
+
+	public GameEngine(GameConfig config)
+	{
 		Bomb = GameObject.Instantiate(config.bomb);
 		Bomb.SetActive(false);
+
         Explosion = GameObject.Instantiate(config.explosion);
         Explosion.SetActive(false);
+
         AbilityCodes = config.AbilityCodes;
 
+		InputButtonCodes = config.InputButtonCodes;
 	}
 
 	public void Awake() {
@@ -33,6 +40,9 @@ public class GameEngine {
     }
 
 	public void Update(float deltaTime) {
+		if( Input.IsDown(InputButton.Select) ) {
+
+		}
 	}
 
 	public void FixedUpdate(float deltaTime) {
@@ -55,5 +65,16 @@ public class GameEngine {
         return explosion;
     }
 
-
+	public bool TryGetCode(InputButton button, out char code) {
+		var value = new InputButtonCode { button = button };
+		var index = InputButtonCodes.IndexOf(value);
+		if( index >= 0 ) {
+			code = InputButtonCodes[index].code;
+			return true;
+		}
+		else {
+			code = default;
+			return false;
+		}
+	}
 }
