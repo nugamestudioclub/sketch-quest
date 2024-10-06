@@ -44,20 +44,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        moveInputDirection = Input.GetAxisRaw("Horizontal");
-        holdingJump = Input.GetKey(KeyCode.Space);
+        var input = UnityRuntime.GameEngine.Input;
 
-        if (!tryingToJump)
-        {
-            tryingToJump = Input.GetKeyDown(KeyCode.Space);
-        }
+        moveInputDirection = input.HorizontalRaw;
+        holdingJump = input[InputButton.Jump];
 
-        if (!tryingToDash)
-        {
-            tryingToDash = Input.GetKeyDown(KeyCode.LeftShift);
-        }
-        HandleAnimation();
-    }
+		if( !tryingToJump ) {
+            tryingToJump = input.IsDown(InputButton.Jump);
+		}
+
+		if( !tryingToDash ) {
+            tryingToDash = input.IsDown(InputButton.Dash);
+		}
+		HandleAnimation();
+	}
 
     private void FixedUpdate()
     {

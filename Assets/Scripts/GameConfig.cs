@@ -5,4 +5,6 @@
 	menuName = "Config/" + nameof(GameConfig))
 ]
 public class GameConfig : ScriptableObject {
+	[field: SerializeField]
+	public GameObject Runtime { get; private set; }
 }
