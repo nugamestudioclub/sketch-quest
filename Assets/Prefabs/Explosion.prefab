@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3557998135278003687}
   - component: {fileID: 9006850172113926711}
-  - component: {fileID: 7760325101696710236}
-  - component: {fileID: 7984251610511939813}
+  - component: {fileID: 2266175820515124471}
   m_Layer: 7
-  m_Name: Bomb
+  m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,40 +63,13 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.38
---- !u!50 &7760325101696710236
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5136883149831182101}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 7bcb020effef18249b2a6e963d629b48, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!114 &7984251610511939813
+  m_Radius: 1
+--- !u!114 &2266175820515124471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,12 +78,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5136883149831182101}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 834881e2549826040851cbf2a6f36e0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0eeb88f73dd87e846b19c9db053999a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombBody: {fileID: 7760325101696710236}
-  animator: {fileID: 5532999548691611064}
-  <DefaultFuseLength>k__BackingField: 3
+  animator: {fileID: 8615757227249663043}
+  <DefaultDetonationLength>k__BackingField: 0.5
 --- !u!1 &7717827254940581590
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,9 +93,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6941984111021751707}
   - component: {fileID: 9197874488417522225}
-  - component: {fileID: 5532999548691611064}
+  - component: {fileID: 8615757227249663043}
   m_Layer: 7
-  m_Name: BombVisual
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d90035b13d4cf5a4ebde26bd1a21e372, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea051c462ec66344b8158de5d461d01b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -197,7 +168,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &5532999548691611064
+--- !u!95 &8615757227249663043
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -207,7 +178,7 @@ Animator:
   m_GameObject: {fileID: 7717827254940581590}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6ab870c7e9933fd4c990d48a2c1e7369, type: 2}
+  m_Controller: {fileID: 9100000, guid: f6df493c9d58f6843b88a7ca857c6c08, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

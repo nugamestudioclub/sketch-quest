@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -11,7 +12,10 @@ public class GameConfig : ScriptableObject {
 
 	public GameObject bomb;
 
-	private AbilityCode[] _abilityCodes;
+    public GameObject explosion;
+
+	[SerializeField]
+	private AbilityCode[] _abilityCodes = Array.Empty<AbilityCode>();
 
 	public ReadOnlyCollection<AbilityCode> AbilityCodes => new(_abilityCodes);
 }

@@ -5,6 +5,8 @@ public class UnityRuntime : MonoBehaviour {
 
 	private static float fixedTimeStep;
 
+	public static GameObject Root { get; private set; }
+
 	public static GameEngine GameEngine { get; private set; }
 
 	[field: SerializeField]
@@ -65,7 +67,7 @@ public class UnityRuntime : MonoBehaviour {
 	private static void OnBeforeSceneLoad() {
 		var config = Resources.Load<GameConfig>(GAME_CONFIG);
 		GameEngine = new(config);
-		var runtime = Instantiate(config.runtime);
-		DontDestroyOnLoad(runtime);
+		Root = Instantiate(config.runtime);
+		DontDestroyOnLoad(Root);
 	}
 }

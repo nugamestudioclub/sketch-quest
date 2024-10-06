@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
 
     private void Bomb()
     {
-        Bomb bomb = UnityRuntime.GameEngine.Bomb.GetComponent<Bomb>();
+        var bomb = UnityRuntime.GameEngine.SpawnBomb(Position);
         UnityRuntime.GameEngine.Logic.ThrowBomb(this, bomb);
     }
     
