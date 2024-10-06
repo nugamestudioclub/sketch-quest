@@ -22,6 +22,19 @@ public class GameLogic
         bomb.Spawn(playerPosition);
         bomb.Ignite(bomb.DefaultFuseLength);
         bomb.Throw(finalThrowVelocity);
-        
-    }
+
+	}
+
+	public static (bool Any, AbilityKind Result) CheckAbilityCode(ReadOnlySpan<char> fragment) {
+		var abilityCodes = UnityRuntime.GameEngine.AbilityCodes;
+		foreach( var abilityCode in abilityCodes ) {
+			if( abilityCode.code.AsSpan(0, fragment.Length).SequenceEqual(fragment) ) {
+				var matchedAbility = abilityCode.code.Length == fragment.Length
+					? abilityCode.ability
+					: AbilityKind.None;
+				return (true, matchedAbility);
+			}
+		}
+		return (false, AbilityKind.None);
+	}
 }
