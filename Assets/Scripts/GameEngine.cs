@@ -101,10 +101,15 @@ public class GameEngine {
 	}
 
 	public void FixedUpdate(float deltaTime) {
+		
 	}
 
 	public void LateUpdate(float deltaTime) {
-	}
+        if (Stars >= 8)
+        {
+            TransitionManager.ToCredits();
+        }
+    }
 
 
 	public Summon SpawnBomb(Vector2 location)
