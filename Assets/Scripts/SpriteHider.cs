@@ -9,6 +9,7 @@ public class SpriteHider : MonoBehaviour
     {
         var renderer = GetComponent<SpriteRenderer>();
         renderer.color = new(.5f,.5f,.5f, .2f);
+        renderer.enabled = false;
 
     }
 }
