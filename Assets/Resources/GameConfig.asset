@@ -21,7 +21,7 @@ MonoBehaviour:
   audioBank: {fileID: 957846000234888324, guid: 27d1955a51be01847b5891816ac846a2, type: 3}
   _abilityCodes:
   - ability: 1
-    code: WDQEA
+    code: AEQDW
   - ability: 2
     code: AQSWDE
   - ability: 3
