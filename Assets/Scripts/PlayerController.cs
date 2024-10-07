@@ -56,6 +56,12 @@ public class PlayerController : MonoBehaviour {
 	public Vector2 Position => transform.position;
 	public bool FacingRight { get; private set; }
 
+	private float unlockedBombTime;
+
+	private float unlockedDashTime;
+
+	private float unlockedDoubleJumpTime;
+
 	void Update() {
 		HandleInput();
 		HandleAnimation();
@@ -74,9 +80,20 @@ public class PlayerController : MonoBehaviour {
 		HandleDashing();
 		HandleFacing();
 		HandleBomb();
-		HandlePlatform();
+
+		HandleAbilityInProgress();
 
 		ClearStaleInputs();
+		ClearExpiredAbilities();
+	}
+
+	private void ClearExpiredAbilities() {
+		if( unlockedBombTime <= 0 )
+			UnlockedBomb = false;
+		if( unlockedDashTime <= 0 )
+			UnlockedDash = false;
+		if( unlockedDoubleJumpTime <= 0 )
+			UnlockedDoubleJump = false;
 	}
 
 	private void ClearStaleInputs() {
@@ -86,12 +103,17 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void HandleCooldowns() {
+		float deltaTime = Time.fixedDeltaTime;
 		if( !CanBomb ) {
-			currentBombCooldown -= Time.fixedDeltaTime;
+			currentBombCooldown -= deltaTime;
 		}
 		if( !CanDash ) {
-			currentDashCooldown -= Time.fixedDeltaTime;
+			currentDashCooldown -= deltaTime;
 		}
+		var abilityDuration = UnityRuntime.GameEngine.TemporaryAbilityDuration;
+		unlockedBombTime = Math.Clamp(unlockedBombTime - deltaTime, 0f, abilityDuration);
+		unlockedDashTime = Math.Clamp(unlockedDashTime - deltaTime, 0f, abilityDuration);
+		unlockedDoubleJumpTime = Math.Clamp(unlockedDoubleJumpTime - deltaTime, 0f, abilityDuration);
 	}
 
 	private void HandleInput() {
@@ -251,14 +273,34 @@ public class PlayerController : MonoBehaviour {
 		currentBombCooldown = bombCooldown;
 	}
 
-	private void HandlePlatform() {
-		GameEngine engine = UnityRuntime.GameEngine;
-		AbilityCode abilityCode = engine.AbilityInProgress;
-		if( abilityCode.ability == AbilityKind.Platform
-			&& engine.TryGetInputButton(abilityCode.code[0], out var button) ) {
-			Debug.Log($"Platform spawning");
-			engine.AbilityInProgress = default;
-			engine.SpawnPlatform(Position, button, PlatformDistance);
+	private void HandleAbilityInProgress() {
+		var gameEngine = UnityRuntime.GameEngine;
+		var abilityCode = gameEngine.AbilityInProgress;
+		float abilityDuration = gameEngine.TemporaryAbilityDuration;
+		switch( abilityCode.ability ) {
+		case AbilityKind.Bomb:
+			unlockedBombTime = abilityDuration;
+			UnlockedBomb = true;
+			break;
+		case AbilityKind.Dash:
+			unlockedDashTime = abilityDuration;
+			UnlockedDash = true;
+			break;
+		case AbilityKind.DoubleJump:
+			unlockedDoubleJumpTime = abilityDuration;
+			UnlockedDoubleJump = true;
+			break;
+		case AbilityKind.Platform:
+			HandlePlatform(abilityCode.code);
+			break;
+		}
+		gameEngine.AbilityInProgress = default;
+	}
+
+	private void HandlePlatform(string code) {
+		var gameEngine = UnityRuntime.GameEngine;
+		if( gameEngine.TryGetInputButton(code[0], out var button) ) {
+			gameEngine.SpawnPlatform(Position, button, PlatformDistance);
 		}
 	}
 
