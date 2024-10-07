@@ -94,6 +94,7 @@ public class Drawing : MonoBehaviour
     private void LateUpdate()
     {
         var camera = Camera.main;
+        
         if (camera != null)
         {
             var cameraPosition = camera.transform.position;
@@ -103,6 +104,9 @@ public class Drawing : MonoBehaviour
                 cameraPosition.y,
                 drawingPosition.z
             );
+        }else
+        {
+            Debug.Log("Camera is null");
         }
     }
     public void Hide()

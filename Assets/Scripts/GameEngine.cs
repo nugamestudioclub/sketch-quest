@@ -94,8 +94,10 @@ public class GameEngine {
         PlatformPoof.transform.parent = parent;
         Music.transform.parent = parent;
         Drawing.transform.parent = parent;
-		
-	}
+		AudioBank.transform.parent = parent;
+
+
+    }
 
 	public void Update(float deltaTime) {
 	}

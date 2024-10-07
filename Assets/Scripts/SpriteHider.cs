@@ -7,6 +7,8 @@ public class SpriteHider : MonoBehaviour
 {
     private void Awake()
     {
-        //GetComponent<SpriteRenderer>().enabled = false;
+        var renderer = GetComponent<SpriteRenderer>();
+        renderer.color = new(.5f,.5f,.5f, .2f);
+
     }
 }
