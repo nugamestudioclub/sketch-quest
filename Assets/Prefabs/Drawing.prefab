@@ -1204,7 +1204,7 @@ RectTransform:
   m_GameObject: {fileID: 3805282299204926940}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5990960991449798841}
@@ -3066,6 +3066,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433731cf09803dc4db57c8c0ec5a8fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coDeltaTime: 0.01
+  fadeDuration: 0.75
+  drawingDuration: 0.5
+  hideDelay: 0.75
   <Fragment>k__BackingField: 
   _canvas: {fileID: 4045205514873253950}
 --- !u!1 &9142404458925850151

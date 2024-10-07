@@ -19,6 +19,9 @@ public class Drawing : MonoBehaviour {
 	[SerializeField]
 	private float drawingDuration = 0.5f;
 
+	[SerializeField]
+	private float hideDelay = 0.75f;
+
 	[field: SerializeField]
 	public string Fragment { get; private set; } = "";
 
@@ -30,6 +33,8 @@ public class Drawing : MonoBehaviour {
 	private readonly List<DrawingImage> _edgeImages = new();
 
 	public bool Open { get; private set; }
+
+	public bool Finished { get; private set; }
 
 	public bool Visible {
 		get => _canvas.gameObject.activeSelf;
@@ -43,9 +48,12 @@ public class Drawing : MonoBehaviour {
 	}
 
 	private void Update() {
-		var input = UnityRuntime.GameEngine.Input;
-		if( Open ) {
-			if( input.IsDown(InputButton.Select) ) {
+		if( Finished )
+			return;
+		var gameEngine = UnityRuntime.GameEngine;
+		var input = gameEngine.Input;
+		if( Visible ) {
+			if( Open && input.IsDown(InputButton.Select) ) {
 				Hide();
 			}
 			else {
@@ -55,20 +63,19 @@ public class Drawing : MonoBehaviour {
 				var (any, ability) = GameLogic.CheckAbilityCode(Fragment);
 				if( !any )
 					Fail();
-				else if( ability != AbilityKind.None)
-				{
-					UnityRuntime.GameEngine.AbilityInProgress = new()
-					{
+				else if( ability != AbilityKind.None ) {
+					var abilityInProgress = new AbilityCode() {
 						ability = ability,
 						code = Fragment
 					};
-					Succeed();
+					gameEngine.AbilityInProgress = abilityInProgress;
+					Succeed(abilityInProgress);
 				}
-					
+
 			}
 		}
-		else if( !Visible ) {
-			if( input.IsDown(InputButton.Select) )
+		else {
+			if( !Open && input.IsDown(InputButton.Select) )
 				Show();
 		}
 	}
@@ -111,32 +118,66 @@ public class Drawing : MonoBehaviour {
 		var code = edge.Code;
 		image.fillOrigin = code[0] == start ? 0 : 1;
 		float elapsedTime = 0f;
+		float deltaTime = UnityRuntime.UnscaledTime(coDeltaTime);
+		float duration = UnityRuntime.UnscaledTime(drawingDuration);
 		do {
-			image.fillAmount = elapsedTime / drawingDuration;
-			yield return new WaitForSeconds(coDeltaTime);
-			elapsedTime += coDeltaTime;
-		} while( elapsedTime < fadeDuration );
+			image.fillAmount = elapsedTime / duration;
+			yield return new WaitForSeconds(deltaTime);
+			elapsedTime += deltaTime;
+		} while( elapsedTime < duration );
 		image.fillAmount = 1f;
 	}
 
 	private IEnumerator DoHide() {
 		Open = false;
+		var gameEngine = UnityRuntime.GameEngine;
+		gameEngine.Paused = false;
 		if( _canvas.TryGetComponent<CanvasGroup>(out var canvasGroup) ) {
 			float elapsedTime = 0f;
+			float deltaTime = coDeltaTime;
+			float duration = fadeDuration;
 			do {
-				canvasGroup.alpha = 1f - (elapsedTime / fadeDuration);
-				yield return new WaitForSeconds(coDeltaTime);
-				elapsedTime += coDeltaTime;
-			} while( elapsedTime < fadeDuration );
+				canvasGroup.alpha = 1f - (elapsedTime / duration);
+				yield return new WaitForSeconds(deltaTime);
+				elapsedTime += deltaTime;
+			} while( elapsedTime < duration );
 			canvasGroup.alpha = 0f;
-			Visible = false;
 		}
+		Visible = false;
+		Finished = false;
+	}
+
+	IEnumerator DoFail() {
+		yield return new WaitForSeconds(UnityRuntime.UnscaledTime(drawingDuration));
+		var gameEngine = UnityRuntime.GameEngine;
+		var errorColor = gameEngine.InkErrorColor;
+		var disabledColor = gameEngine.InkDisabledColor;
+		var hiddenColor = Color.clear;
+		DrawPoints(_pointImages, Fragment.AsSpan(), errorColor, disabledColor);
+		DrawEdges(_edgeImages, Fragment.AsMemory(), errorColor, hiddenColor);
+		yield return new WaitForSeconds(UnityRuntime.UnscaledTime(hideDelay));
+		Hide();
+	}
+
+	IEnumerator DoSucceed(AbilityCode abilityInProgress) {
+		yield return new WaitForSeconds(UnityRuntime.UnscaledTime(drawingDuration));
+		var gameEngine = UnityRuntime.GameEngine;
+		gameEngine.TryGetColor(abilityInProgress.ability, out var abilityColor);
+		var disabledColor = gameEngine.InkDisabledColor;
+		var hiddenColor = Color.clear;
+		DrawPoints(_pointImages, Fragment.AsSpan(), abilityColor, disabledColor);
+		DrawEdges(_edgeImages, Fragment.AsMemory(), abilityColor, hiddenColor);
+		yield return new WaitForSeconds(UnityRuntime.UnscaledTime(hideDelay));
+		Hide();
 	}
 
 	private IEnumerator DoShow() {
+		var gameEngine = UnityRuntime.GameEngine;
+		gameEngine.Paused = true;
+		Finished = false;
 		Visible = true;
 		Fragment = "";
-		DrawAll(_pointImages, UnityRuntime.GameEngine.InkDisabledColor);
+		DrawAll(_pointImages, gameEngine.InkDisabledColor);
 		DrawAll(_edgeImages, Color.clear);
 		var camera = Camera.main;
 		if( Camera.main != null ) {
@@ -150,11 +191,13 @@ public class Drawing : MonoBehaviour {
 		}
 		if( _canvas.TryGetComponent<CanvasGroup>(out var canvasGroup) ) {
 			float elapsedTime = 0f;
+			float deltaTime = UnityRuntime.UnscaledTime(coDeltaTime);
+			float duration = UnityRuntime.UnscaledTime(fadeDuration);
 			do {
-				canvasGroup.alpha = elapsedTime / fadeDuration;
-				yield return new WaitForSeconds(coDeltaTime);
-				elapsedTime += coDeltaTime;
-			} while( elapsedTime < fadeDuration );
+				canvasGroup.alpha = elapsedTime / duration;
+				yield return new WaitForSeconds(deltaTime);
+				elapsedTime += deltaTime;
+			} while( elapsedTime < duration );
 			canvasGroup.alpha = 1f;
 		}
 		Open = true;
@@ -167,10 +210,8 @@ public class Drawing : MonoBehaviour {
 			var defaultColor = gameEngine.InkDefaultColor;
 			var disabledColor = gameEngine.InkDisabledColor;
 			var hiddenColor = Color.clear;
-			Debug.Log($"Points length {_pointImages.Count}");
 			DrawPoints(_pointImages, Fragment, defaultColor, disabledColor);
-			Debug.Log($"Edges length {_edgeImages.Count}");
-			DrawEdges(_edgeImages, Fragment.AsMemory(), defaultColor, hiddenColor);
+			DrawEdges(_edgeImages, Fragment.AsMemory(), defaultColor, hiddenColor, last: true);
 		}
 		else {
 			Fail();
@@ -182,7 +223,7 @@ public class Drawing : MonoBehaviour {
 			drawingImage.Image.color = color;
 	}
 
-	private void DrawEdges(List<DrawingImage> edges, ReadOnlyMemory<char> pattern, Color primaryColor, Color secondaryColor) {
+	private void DrawEdges(List<DrawingImage> edges, ReadOnlyMemory<char> pattern, Color primaryColor, Color secondaryColor, bool last = false) {
 		foreach( var edge in edges ) {
 			var image = edge.Image;
 			var code = edge.Code;
@@ -194,7 +235,7 @@ public class Drawing : MonoBehaviour {
 				if( code.Contains(start) && code.Contains(end) ) {
 					image.color = primaryColor;
 					var current = span[^1];
-					if( current == start || current == end )
+					if( last && (current == start || current == end) )
 						StartCoroutine(DoDrawEdge(edge, start));
 				}
 			}
@@ -214,10 +255,12 @@ public class Drawing : MonoBehaviour {
 	}
 
 	private void Fail() {
-		Hide();
+		Finished = true;
+		StartCoroutine(DoFail());
 	}
 
-	private void Succeed() {
-		Hide();
+	private void Succeed(AbilityCode abilityInProgress) {
+		Finished = true;
+		StartCoroutine(DoSucceed(abilityInProgress));
 	}
 }
