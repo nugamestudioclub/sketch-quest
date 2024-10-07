@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Switch : MonoBehaviour
 {
+    [field:SerializeField]
     public bool IsOn { get; private set; }
+    [field: SerializeField]
     public Gate Gate { get; private set; }
 
     private void Start()
@@ -17,10 +19,7 @@ public class Switch : MonoBehaviour
     private void ColliderNode_Collision(object sender, CollisionEventArgs e)
     {
         Debug.Log($"Switch Activated: {gameObject.name}");
-        if (!IsOn)
-        {
-            Gate.Open();
-        }
+        Gate.ToggleOpenClose();
         
     }
 }

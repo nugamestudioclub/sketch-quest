@@ -14,7 +14,6 @@ public class PlayerAnimation : MonoBehaviour
     public void Play(PlayerAnimationType type)
     {
         animator.Play(Enum.GetNames(typeof(PlayerAnimationType))[(int)type]);
-        Debug.Log($"Animation Playing: {Enum.GetNames(typeof(PlayerAnimationType))[(int)type]}");
     }
 
     public bool IsTypePlaying (PlayerAnimationType type)

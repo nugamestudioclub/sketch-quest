@@ -12,7 +12,7 @@ public class CollisionEventArgs : EventArgs
         this.type = type;
     }
 }
-
+[RequireComponent(typeof(Collider2D))]
 public class EventCollider : MonoBehaviour
 {
     [field: SerializeField]
@@ -22,21 +22,38 @@ public class EventCollider : MonoBehaviour
 
     private HashSet<Collider2D> colliders = new();
 
+    private void Awake()
+    {
+        GetComponent<Collider2D>().isTrigger = true;
+    }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    public void Collide(Collider2D collision)
     {
         if (!colliders.Contains(collision))
         {
             colliders.Add(collision);
+
             OnCollision(new CollisionEventArgs(Type));
+
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    public void UnCollide(Collider2D collision)
     {
+        colliders.Clear();
         if (colliders.Contains(collision))
         {
             colliders.Remove(collision);
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Collide(collision);
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        UnCollide(collision);
     }
 
 

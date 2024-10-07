@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
     private void Dash()
     {
         playerBody.gravityScale = dashingGravity;
-        dashDirection = new Vector2(FacingRight ? dashSpeed : -dashSpeed * dashSpeed, 0);
+        dashDirection = new Vector2(FacingRight ? dashSpeed : -dashSpeed, 0);
         currentDashDuration = 0;
         playerBody.velocity = dashDirection;
     }

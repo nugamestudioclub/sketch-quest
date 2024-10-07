@@ -19,7 +19,6 @@ public class Bomb : MonoBehaviour
         if (IsIgnited)
         {
             FuseLength -= Time.fixedDeltaTime;
-            Debug.Log($"FuseLength: {FuseLength}");
 
             if (FuseLength <= 0)
             {
@@ -36,7 +35,6 @@ public class Bomb : MonoBehaviour
 
         Explosion explosion = UnityRuntime.GameEngine.SpawnExplosion(transform.position);
         explosion.Spawn(transform.position, explosion.DefaultDetonationLength);
-        Debug.Log($"bomb exploded {name}");
     }
 
     public void Spawn(Vector2 spawnLocaton)
@@ -44,7 +42,6 @@ public class Bomb : MonoBehaviour
         transform.position = spawnLocaton;
         gameObject.SetActive(true);
         animator.Play("BombIdle");
-        Debug.Log($"currentTime spawn: {Time.fixedTime}");
     }
 
     public void Ignite(float fuseLength)
