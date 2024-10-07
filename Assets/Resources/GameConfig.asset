@@ -18,6 +18,7 @@ MonoBehaviour:
   platform: {fileID: 43329106444797906, guid: 0969b3e106c2ad04b8fe0af11f8d2610, type: 3}
   platformPoof: {fileID: 3956104798210938042, guid: 30afcbe4c69125746b5f807f0237522f, type: 3}
   music: {fileID: 7674822853108066538, guid: 0167522c45946ba48bd705c578132d75, type: 3}
+  audioBank: {fileID: 957846000234888324, guid: 27d1955a51be01847b5891816ac846a2, type: 3}
   _abilityCodes:
   - ability: 1
     code: WDQEA
@@ -60,3 +61,4 @@ MonoBehaviour:
   inkDisabledColor: {r: 0.33, g: 0.33, b: 0.33, a: 1}
   inkErrorColor: {r: 0.4, g: 0.04150944, b: 0.04150944, a: 1}
   pausedTimeScale: 0.05
+  temporaryAbilityDuration: 30
