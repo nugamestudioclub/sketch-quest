@@ -278,7 +278,7 @@ public class Drawing : MonoBehaviour
             var span = pattern.Span;
             foreach (var (start, end) in GetEdges(pattern))
             {
-                if (code.Contains(start) && code.Contains(end))
+                if (start != end && code.Contains(start) && code.Contains(end))
                 {
                     image.color = primaryColor;
                     var current = span[^1];
