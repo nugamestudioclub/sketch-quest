@@ -10,46 +10,49 @@ public struct DrawingPoint {
 }
 
 public class Drawing : MonoBehaviour {
-	private bool _visible;
+	[SerializeField]
+	private float coDeltaTime = 0.01f;
+
+	[SerializeField]
+	private float fadeDuration = 0.75f;
+
+	[SerializeField]
+	private float drawingDuration = 0.5f;
 
 	[field: SerializeField]
 	public string Fragment { get; private set; } = "";
 
 	[SerializeField]
-	private GameObject _canvas;
+	private Canvas _canvas;
 
 	private readonly List<DrawingImage> _pointImages = new();
 
 	private readonly List<DrawingImage> _edgeImages = new();
 
+	public bool Open { get; private set; }
+
 	public bool Visible {
-		get => _visible;
-		set {
-			if( value )
-				Show();
-			else
-				Hide();
-		}
+		get => _canvas.gameObject.activeSelf;
+		set => _canvas.gameObject.SetActive(value);
 	}
 
 	void Start() {
 		foreach( var image in GetComponentsInChildren<DrawingImage>() )
 			(image.Code.Length == 2 ? _edgeImages : _pointImages).Add(image);
-		Hide();
+		Visible = false;
 	}
 
 	private void Update() {
 		var input = UnityRuntime.GameEngine.Input;
-		if( Visible ) {
+		if( Open ) {
 			if( input.IsDown(InputButton.Select) ) {
-				Visible = false;
+				Hide();
 			}
 			else {
 				var button = PollDrawing(input);
 				if( button != InputButton.None )
 					Draw(button);
 				var (any, ability) = GameLogic.CheckAbilityCode(Fragment);
-				//Debug.Log($"any {any} ability {ability}");
 				if( !any )
 					Fail();
 				else if( ability != AbilityKind.None)
@@ -64,31 +67,19 @@ public class Drawing : MonoBehaviour {
 					
 			}
 		}
-		else {
+		else if( !Visible ) {
 			if( input.IsDown(InputButton.Select) )
-				Visible = true;
+				Show();
 		}
 	}
 
 	public void Hide() {
-		_visible = false;
-		_canvas.SetActive(false);
-		Clear();
+		Fragment = "";
+		StartCoroutine(DoHide());
 	}
 
 	public void Show() {
-		_visible = true;
-		_canvas.SetActive(true);
-		var camera = Camera.main;
-		if( Camera.main != null ) {
-			var cameraPosition = camera.transform.position;
-			var drawingPosition = _canvas.transform.position;
-			_canvas.transform.position = new Vector3(
-				cameraPosition.x,
-				cameraPosition.y,
-				drawingPosition.z
-			);
-		}
+		StartCoroutine(DoShow());
 	}
 
 	private static IEnumerable<(char Start, char End)> GetEdges(ReadOnlyMemory<char> chars) {
@@ -115,22 +106,58 @@ public class Drawing : MonoBehaviour {
 			return InputButton.None;
 	}
 
-	private void Clear() {
+	private IEnumerator DoDrawEdge(DrawingImage edge, char start) {
+		var image = edge.Image;
+		var code = edge.Code;
+		image.fillOrigin = code[0] == start ? 0 : 1;
+		float elapsedTime = 0f;
+		do {
+			image.fillAmount = elapsedTime / drawingDuration;
+			yield return new WaitForSeconds(coDeltaTime);
+			elapsedTime += coDeltaTime;
+		} while( elapsedTime < fadeDuration );
+		image.fillAmount = 1f;
+	}
+
+	private IEnumerator DoHide() {
+		Open = false;
+		if( _canvas.TryGetComponent<CanvasGroup>(out var canvasGroup) ) {
+			float elapsedTime = 0f;
+			do {
+				canvasGroup.alpha = 1f - (elapsedTime / fadeDuration);
+				yield return new WaitForSeconds(coDeltaTime);
+				elapsedTime += coDeltaTime;
+			} while( elapsedTime < fadeDuration );
+			canvasGroup.alpha = 0f;
+			Visible = false;
+		}
+	}
+
+	private IEnumerator DoShow() {
+		Visible = true;
 		Fragment = "";
 		DrawAll(_pointImages, UnityRuntime.GameEngine.InkDisabledColor);
 		DrawAll(_edgeImages, Color.clear);
-	}
-
-	private IEnumerator DoDrawEdge(DrawingImage edge, char start, float duration) {
-		var image = edge.Image;
-		var code = edge.Code;
-		int precision = 10;
-		float delta = duration / precision;
-		image.fillOrigin = code[0] == start ? 0 : 1;
-		for( int i = 1; i <= precision; ++i ) {
-			image.fillAmount = Mathf.Lerp(0f, 1f, (i * delta) / duration);
-			yield return new WaitForSeconds(delta);
+		var camera = Camera.main;
+		if( Camera.main != null ) {
+			var cameraPosition = camera.transform.position;
+			var drawingPosition = _canvas.transform.position;
+			_canvas.transform.position = new Vector3(
+				cameraPosition.x,
+				cameraPosition.y,
+				drawingPosition.z
+			);
 		}
+		if( _canvas.TryGetComponent<CanvasGroup>(out var canvasGroup) ) {
+			float elapsedTime = 0f;
+			do {
+				canvasGroup.alpha = elapsedTime / fadeDuration;
+				yield return new WaitForSeconds(coDeltaTime);
+				elapsedTime += coDeltaTime;
+			} while( elapsedTime < fadeDuration );
+			canvasGroup.alpha = 1f;
+		}
+		Open = true;
 	}
 
 	private void Draw(InputButton button) {
@@ -140,7 +167,9 @@ public class Drawing : MonoBehaviour {
 			var defaultColor = gameEngine.InkDefaultColor;
 			var disabledColor = gameEngine.InkDisabledColor;
 			var hiddenColor = Color.clear;
+			Debug.Log($"Points length {_pointImages.Count}");
 			DrawPoints(_pointImages, Fragment, defaultColor, disabledColor);
+			Debug.Log($"Edges length {_edgeImages.Count}");
 			DrawEdges(_edgeImages, Fragment.AsMemory(), defaultColor, hiddenColor);
 		}
 		else {
@@ -157,14 +186,16 @@ public class Drawing : MonoBehaviour {
 		foreach( var edge in edges ) {
 			var image = edge.Image;
 			var code = edge.Code;
+			Debug.Log($"Draw edge '{code}'");
 			image.color = secondaryColor;
 			var span = pattern.Span;
 			foreach( var (start, end) in GetEdges(pattern) ) {
+				Debug.Log($"Draw Edge (start '{start}', end '{end}'");
 				if( code.Contains(start) && code.Contains(end) ) {
 					image.color = primaryColor;
 					var current = span[^1];
 					if( current == start || current == end )
-						StartCoroutine(DoDrawEdge(edge, start, 0.5f));
+						StartCoroutine(DoDrawEdge(edge, start));
 				}
 			}
 		}
@@ -183,10 +214,10 @@ public class Drawing : MonoBehaviour {
 	}
 
 	private void Fail() {
-		Clear();
+		Hide();
 	}
 
 	private void Succeed() {
-        Clear();
+		Hide();
 	}
 }
