@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameLogic 
 {
-    public void ThrowBomb(PlayerController player, Bomb bomb)
+    public void ThrowBomb(PlayerController player, Summon bomb)
     {
         Vector2 playerVelocity = player.Velocity;
         bool playerFacingRight = player.FacingRight;

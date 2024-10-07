@@ -65,8 +65,10 @@ public class GameEngine {
 	public void LateUpdate(float deltaTime) {
 	}
 
-	public Bomb SpawnBomb(Vector2 location) {
-		Bomb bomb = UnityRuntime.GameEngine.Bomb.GetComponent<Bomb>();
+
+	public Summon SpawnBomb(Vector2 location)
+	{
+        Summon bomb = UnityRuntime.GameEngine.Bomb.GetComponent<Summon>();
 		bomb.transform.position = location;
 		return bomb;
 	}
