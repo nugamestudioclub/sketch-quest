@@ -1143,10 +1143,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7884685562353507938, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
-      propertyPath: <ThrowPower>k__BackingField
-      value: 12.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7884685562353507938, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
       propertyPath: <UnlockedBomb>k__BackingField
       value: 1
       objectReference: {fileID: 0}

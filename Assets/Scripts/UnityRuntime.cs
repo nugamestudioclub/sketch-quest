@@ -34,14 +34,14 @@ public class UnityRuntime : MonoBehaviour {
 		else if( Input.GetKeyUp(KeyCode.Space) )
 			input.Release(InputButton.Jump);
 		
-		if( Input.GetKeyDown(KeyCode.X) )
+		if( Input.GetKeyDown(KeyCode.E) )
 			input.Press(InputButton.Bomb);
-		else if( Input.GetKeyUp(KeyCode.X) )
+		else if( Input.GetKeyUp(KeyCode.E) )
 			input.Release(InputButton.Bomb);
 
-		if( Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) )
+		if( Input.GetKeyDown(KeyCode.Q))
 			input.Press(InputButton.Dash);
-		else if( Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift) )
+		else if( Input.GetKeyUp(KeyCode.Q))
 			input.Release(InputButton.Dash);
 
 		input.Horizontal = Input.GetAxis("Horizontal");

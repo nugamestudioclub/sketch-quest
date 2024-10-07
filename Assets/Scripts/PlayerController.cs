@@ -36,7 +36,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float risingGravity;
     [SerializeField] private float dashingGravity;
     [SerializeField] private float gravityChangeSpeed;
+    [SerializeField] private float bombCooldown = 3;
+    private float currentBombCooldown;
+    [SerializeField] private float dashCooldown = 1.5f;
+    private float currentDashCooldown;
 
+    public bool CanDash => UnlockedDash && currentDashCooldown < 0;
+    public bool CanBomb => UnlockedBomb && currentBombCooldown < 0;
     [field: SerializeField] public bool UnlockedDoubleJump { get; set; }
     [field: SerializeField] public bool UnlockedDash { get; set; }
     [field: SerializeField] public bool UnlockedBomb { get; set; }
@@ -72,6 +78,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        HandleCooldowns();
         HandleGrounded();
         HandleRunning();
 
@@ -93,6 +100,20 @@ public class PlayerController : MonoBehaviour
         tryingToDash = false;
         tryingToJump = false;
         tryingToBomb = false;
+    }
+
+    private void HandleCooldowns()
+    {
+        if (!CanBomb)
+        {
+            currentBombCooldown -= Time.fixedDeltaTime;
+        }
+        if (!CanDash)
+        {
+            currentDashCooldown -= Time.fixedDeltaTime;
+        }
+        
+        
     }
     private void HandleRunning()
     {
@@ -149,11 +170,12 @@ public class PlayerController : MonoBehaviour
         dashDirection = new Vector2(FacingRight ? dashSpeed : -dashSpeed, 0);
         currentDashDuration = 0;
         playerBody.velocity = dashDirection;
+        currentDashCooldown = dashCooldown;
     }
 
     private void HandleDashing()
     {
-        if (UnlockedDash && tryingToDash)
+        if (CanDash && tryingToDash)
         {
             if (isGrounded)
             {
@@ -232,7 +254,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleBomb()
     {
-        if (UnlockedBomb && tryingToBomb)
+        if (CanBomb && tryingToBomb)
         {
             Bomb();
         }
@@ -242,6 +264,7 @@ public class PlayerController : MonoBehaviour
     {
         var bomb = UnityRuntime.GameEngine.SpawnBomb(Position);
         UnityRuntime.GameEngine.Logic.ThrowBomb(this, bomb);
+        currentBombCooldown = bombCooldown;
     }
     
 }
