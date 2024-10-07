@@ -29,6 +29,11 @@ public class UnityRuntime : MonoBehaviour {
 
 		input.Update();
 
+		if( Input.GetKeyDown(KeyCode.Tab) )
+			input.Press(InputButton.Select);
+		else if( Input.GetKeyUp(KeyCode.Tab) )
+			input.Release(InputButton.Select);
+
 		if( Input.GetKeyDown(KeyCode.Space) )
 			input.Press(InputButton.Jump);
 		else if( Input.GetKeyUp(KeyCode.Space) )
@@ -43,6 +48,31 @@ public class UnityRuntime : MonoBehaviour {
 			input.Press(InputButton.Dash);
 		else if( Input.GetKeyUp(KeyCode.Q))
 			input.Release(InputButton.Dash);
+
+		if( Input.GetKeyDown(KeyCode.Q) )
+			input.Press(InputButton.UpLeft);
+		else if( Input.GetKeyUp(KeyCode.Q) )
+			input.Release(InputButton.UpLeft);
+		if( Input.GetKeyDown(KeyCode.W) )
+			input.Press(InputButton.Up);
+		else if( Input.GetKeyUp(KeyCode.W) )
+			input.Release(InputButton.Up);
+		if( Input.GetKeyDown(KeyCode.E) )
+			input.Press(InputButton.UpRight);
+		else if( Input.GetKeyUp(KeyCode.E) )
+			input.Release(InputButton.UpRight);
+		if( Input.GetKeyDown(KeyCode.A) )
+			input.Press(InputButton.DownLeft);
+		else if( Input.GetKeyUp(KeyCode.A) )
+			input.Release(InputButton.DownLeft);
+		if( Input.GetKeyDown(KeyCode.S) )
+			input.Press(InputButton.Down);
+		else if( Input.GetKeyUp(KeyCode.S) )
+			input.Release(InputButton.Down);
+		if( Input.GetKeyDown(KeyCode.D) )
+			input.Press(InputButton.DownRight);
+		else if( Input.GetKeyUp(KeyCode.D) )
+			input.Release(InputButton.DownRight);
 
 		input.Horizontal = Input.GetAxis("Horizontal");
 		input.HorizontalRaw = Input.GetAxisRaw("Horizontal");
