@@ -18,6 +18,8 @@ public class GameConfig : ScriptableObject {
 
 	public GameObject platformPoof;
 
+	public GameObject music;
+
     [SerializeField]
 	private AbilityCode[] _abilityCodes = Array.Empty<AbilityCode>();
 	

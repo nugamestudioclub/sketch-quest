@@ -20,6 +20,8 @@ public class GameEngine {
 
     public GameObject PlatformPoof { get; private set; }
 
+    public GameObject Music { get; private set; }
+
     public Drawing Drawing { get; private set; }
 
 	public Color InkDefaultColor { get; private set; }
@@ -45,6 +47,8 @@ public class GameEngine {
         PlatformPoof = GameObject.Instantiate(config.platformPoof);
         PlatformPoof.SetActive(false);
 
+        Music = GameObject.Instantiate(config.music);
+
         AbilityCodes = config.AbilityCodes;
 		AbilityColors = config.AbilityColors;
 
@@ -68,6 +72,7 @@ public class GameEngine {
 		Explosion.transform.parent = parent;
         Platform.transform.parent = parent;
         PlatformPoof.transform.parent = parent;
+        Music.transform.parent = parent;
         Drawing.transform.parent = parent;
 		
 	}
