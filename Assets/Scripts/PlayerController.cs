@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void ClearExpiredAbilities() {
+		return;
 		if( unlockedBombTime <= 0 )
 			UnlockedBomb = false;
 		if( unlockedDashTime <= 0 )
@@ -170,7 +171,7 @@ public class PlayerController : MonoBehaviour {
 
 	private Vector2 GroundCheckOffset(Collider2D value) {
 		var bounds = value.bounds;
-		return new Vector2(bounds.center.x, bounds.min.y);
+		return new Vector2(bounds.center.x, bounds.min.y + groundCheckRadius*.75f);
 	}
 
 	private void HandleJump() {

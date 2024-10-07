@@ -233,7 +233,7 @@ MonoBehaviour:
   moveSpeed: 10
   dashSpeed: 25
   dashTime: 0.2
-  groundCheckRadius: 0.35
+  groundCheckRadius: 0.8
   runningFalloff: 0.1
   <ThrowAngleDegrees>k__BackingField: 45
   <ThrowPower>k__BackingField: 12.5
