@@ -24,7 +24,7 @@ public class GameEngine {
 
     public AudioBank AudioBank { get; private set; }
 
-	public float Volume { get; set; } = .1f;
+	public float Volume { get; set; } = 1.0f;
     public System.Random Random { get; } = new();
     public Drawing Drawing { get; private set; }
 
@@ -139,6 +139,7 @@ public class GameEngine {
         Summon summon = UnityRuntime.GameEngine.Platform.GetComponent<Summon>();
 		summon.Spawn(offset);
 		summon.StartExpiring(summon.DefaultFuseLength);
+		AudioBank.Play(10);
         return summon;
     }
 

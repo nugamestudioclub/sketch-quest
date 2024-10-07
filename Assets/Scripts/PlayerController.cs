@@ -222,10 +222,13 @@ public class PlayerController : MonoBehaviour {
 
 	private void HandleGrounded() {
 		playerBody.gravityScale = risingGravity;
+		bool wasGrounded = isGrounded;
 		isGrounded = Physics2D.OverlapCircle(GroundCheckOffset(playerCollider), groundCheckRadius, ~LayerMask.GetMask("Player", "Switch"));
 		if( isGrounded ) {
 			canDoubleJump = true;
 			canAirDash = true;
+			if( !wasGrounded )
+				UnityRuntime.GameEngine.AudioBank.Play(5);
 		}
 	}
 

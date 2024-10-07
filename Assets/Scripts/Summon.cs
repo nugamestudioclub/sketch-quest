@@ -35,17 +35,20 @@ public class Summon : MonoBehaviour
     {
         gameObject.SetActive(false);
         IsExpiring = false;
-        //summon explosion
-        if (Type == SummonType.Bomb)
+        var gameEngine = UnityRuntime.GameEngine;
+		//summon explosion
+		if (Type == SummonType.Bomb)
         {
             Explosion explosion = UnityRuntime.GameEngine.SpawnExplosion(transform.position);
             explosion.Spawn(transform.position, explosion.DefaultDetonationLength);
+            gameEngine.AudioBank.Play(gameEngine.Random.Next(11, 14));
         }
         else
         {
             Explosion explosion = UnityRuntime.GameEngine.SpawnPlatformPoof(transform.position);
             explosion.Spawn(transform.position, explosion.DefaultDetonationLength);
-        }
+			gameEngine.AudioBank.Play(gameEngine.Random.Next(6, 10));
+		}
 
     }
 
