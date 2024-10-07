@@ -187,8 +187,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0055, y: 0.02}
-  m_Size: {x: 0.57, y: 1.06}
+  m_Offset: {x: 0.005499999, y: -0.07034167}
+  m_Size: {x: 0.57000005, y: 0.87931764}
   m_Direction: 0
 --- !u!50 &8238182342549702195
 Rigidbody2D:
@@ -237,7 +237,7 @@ MonoBehaviour:
   runningFalloff: 0.1
   <ThrowAngleDegrees>k__BackingField: 45
   <ThrowPower>k__BackingField: 12.5
-  <PlatformDistance>k__BackingField: 5
+  <PlatformDistance>k__BackingField: 3.5
   playerBody: {fileID: 8238182342549702195}
   playerCollider: {fileID: 1897602710377370482}
   spriteRenderer: {fileID: 183610148054478711}

@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour {
 
 		//draw platformSpawns
 		Gizmos.color = Color.blue;
-		int[] platformDegrees = { 30, 150, 210, 330 };
+		int[] platformDegrees = { 15, 165, 210, 330 };
 		foreach( var degrees in platformDegrees ) {
 			Gizmos.DrawWireSphere(GameLogic.GetPlatformOffset(Position, degrees, PlatformDistance), groundCheckRadius);
 		}

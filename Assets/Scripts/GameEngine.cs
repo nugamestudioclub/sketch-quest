@@ -117,8 +117,8 @@ public class GameEngine {
     {
 		float degrees = inputButton switch
 		{
-			InputButton.UpLeft => 150,
-            InputButton.UpRight => 30,
+			InputButton.UpLeft => 165,
+            InputButton.UpRight => 15,
 			InputButton.DownLeft => 210,
 			InputButton.DownRight => 330,
             _ => -1
@@ -130,7 +130,7 @@ public class GameEngine {
 			offset = Vector2.zero;
 		}
         Summon summon = UnityRuntime.GameEngine.Platform.GetComponent<Summon>();
-		summon.Spawn(origin + offset);
+		summon.Spawn(offset);
 		summon.StartExpiring(summon.DefaultFuseLength);
         return summon;
     }
