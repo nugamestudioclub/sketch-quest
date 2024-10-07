@@ -25,6 +25,7 @@ public class Collectible : MonoBehaviour {
 		var gameEngine = UnityRuntime.GameEngine;
 		switch( Kind ) {
 		case CollectibleKind.Star:
+			gameEngine.AudioBank.Play(14);
 			++gameEngine.Stars;
 			break;
 		case CollectibleKind.WinGame:

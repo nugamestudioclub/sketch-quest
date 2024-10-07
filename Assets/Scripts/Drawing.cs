@@ -248,7 +248,7 @@ public class Drawing : MonoBehaviour
             
             if (Fragment.Length > 1)
             {
-                gameEngine.AudioBank.Play(gameEngine.Random.Next(0, 4));
+                gameEngine.AudioBank.Play(gameEngine.Random.Next(0, 5));
             }
                 
         }
