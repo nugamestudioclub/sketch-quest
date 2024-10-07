@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour {
 		else if( IsDashing && !playerAnimator.IsTypePlaying(PlayerAnimationType.Dash) ) {
 			playerAnimator.Play(PlayerAnimationType.Dash);
 		}
-		else if( isGrounded && IsMovingHorizontally ) {
+		else if( isGrounded && IsTryingToMove) {
 			playerAnimator.Play(PlayerAnimationType.Run);
 		}
 		else if( isGrounded ) {
