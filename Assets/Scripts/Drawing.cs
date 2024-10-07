@@ -80,7 +80,21 @@ public class Drawing : MonoBehaviour {
 		}
 	}
 
-	public void Hide() {
+    private void LateUpdate()
+    {
+        var camera = Camera.main;
+        if (camera != null)
+        {
+            var cameraPosition = camera.transform.position;
+            var drawingPosition = _canvas.transform.position;
+            _canvas.transform.position = new Vector3(
+                cameraPosition.x,
+                cameraPosition.y,
+                drawingPosition.z
+            );
+        }
+    }
+    public void Hide() {
 		Fragment = "";
 		StartCoroutine(DoHide());
 	}
@@ -179,16 +193,7 @@ public class Drawing : MonoBehaviour {
 		Fragment = "";
 		DrawAll(_pointImages, gameEngine.InkDisabledColor);
 		DrawAll(_edgeImages, Color.clear);
-		var camera = Camera.main;
-		if( Camera.main != null ) {
-			var cameraPosition = camera.transform.position;
-			var drawingPosition = _canvas.transform.position;
-			_canvas.transform.position = new Vector3(
-				cameraPosition.x,
-				cameraPosition.y,
-				drawingPosition.z
-			);
-		}
+		
 		if( _canvas.TryGetComponent<CanvasGroup>(out var canvasGroup) ) {
 			float elapsedTime = 0f;
 			float deltaTime = UnityRuntime.UnscaledTime(coDeltaTime);
