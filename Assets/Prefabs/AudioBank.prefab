@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &957846000234888324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 330263473853278111}
+  - component: {fileID: 7728571105720943817}
+  m_Layer: 0
+  m_Name: AudioBank
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &330263473853278111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957846000234888324}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.049085, y: -1.7061286, z: 0.014461211}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7728571105720943817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957846000234888324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60faef4e4790be84590dbc4d8803c66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clips:
+  - {fileID: 8300000, guid: 7d90ba05adda84d4f861586bc82bf428, type: 3}
+  - {fileID: 8300000, guid: 6fbf2325d7cd8374c8f4179a3087df8d, type: 3}
+  - {fileID: 8300000, guid: 56c5376d921c7e047842a5d9c04ace60, type: 3}
+  - {fileID: 8300000, guid: dd183faa9c713fd4084c2aac0146365b, type: 3}
+  - {fileID: 8300000, guid: f08eed1a86b25ed449f2bd737f13138c, type: 3}
+  - {fileID: 8300000, guid: 5cf6500579c916046a12cc15d4db3f14, type: 3}
+  - {fileID: 8300000, guid: a92e280b088e5924c9dfdbd0b21b16da, type: 3}
+  - {fileID: 8300000, guid: a3dfc63b911049c459e001ac12aba018, type: 3}
+  - {fileID: 8300000, guid: fe1227c2665794347b35e3a80682ade0, type: 3}
+  - {fileID: 8300000, guid: b9f4921993b792e4799bdfb0c59d6bc1, type: 3}
+  - {fileID: 8300000, guid: b1fc30f1c939f2744b3ae32f4d6d75af, type: 3}
+  - {fileID: 8300000, guid: aaec723e53fb77d4fb6ddc6a6d35fb84, type: 3}
+  - {fileID: 8300000, guid: 613cb705b88fbc242b627c8851ec53ae, type: 3}
+  - {fileID: 8300000, guid: c059d493cdea5f341bff7f376013bf4e, type: 3}
+  <Players>k__BackingField: 5

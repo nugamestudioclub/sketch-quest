@@ -22,6 +22,10 @@ public class GameEngine {
 
     public GameObject Music { get; private set; }
 
+    public AudioBank AudioBank { get; private set; }
+
+	public float Volume { get; set; } = .1f;
+    public System.Random Random { get; } = new();
     public Drawing Drawing { get; private set; }
 
 	public Color InkDefaultColor { get; private set; }
@@ -58,6 +62,9 @@ public class GameEngine {
         PlatformPoof.SetActive(false);
 
         Music = GameObject.Instantiate(config.music);
+
+		var bankObj = GameObject.Instantiate(config.audioBank);
+		AudioBank = bankObj.GetComponent<AudioBank>();
 
         AbilityCodes = config.AbilityCodes;
 		AbilityColors = config.AbilityColors;

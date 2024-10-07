@@ -19,6 +19,8 @@ public class GameConfig : ScriptableObject {
 
 	public GameObject music;
 
+	public GameObject audioBank;
+
     [SerializeField]
 	private AbilityCode[] _abilityCodes = Array.Empty<AbilityCode>();
 	
