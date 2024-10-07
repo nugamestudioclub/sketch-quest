@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834881e2549826040851cbf2a6f36e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombBody: {fileID: 7760325101696710236}
+  body: {fileID: 7760325101696710236}
   animator: {fileID: 5532999548691611064}
   <DefaultFuseLength>k__BackingField: 3
 --- !u!1 &7717827254940581590

@@ -1,7 +1,11 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum ExplosionType
+{
+    Bomb, 
+    Platform,
+}
 public class Explosion : MonoBehaviour
 {
 
