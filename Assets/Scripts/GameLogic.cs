@@ -30,8 +30,9 @@ public class GameLogic
 	public static (bool Any, AbilityKind Result) CheckAbilityCode(ReadOnlySpan<char> fragment) {
 		var abilityCodes = UnityRuntime.GameEngine.AbilityCodes;
 		foreach( var abilityCode in abilityCodes ) {
-			if( abilityCode.code.AsSpan(0, fragment.Length).SequenceEqual(fragment) ) {
-				var matchedAbility = abilityCode.code.Length == fragment.Length
+            var code = abilityCode.code;
+			if( code.AsSpan(0, Math.Min(code.Length, fragment.Length)).SequenceEqual(fragment) ) {
+                var matchedAbility = fragment.Length >= abilityCode.code.Length
 					? abilityCode.ability
 					: AbilityKind.None;
 				return (true, matchedAbility);

@@ -22,7 +22,18 @@ public class GameConfig : ScriptableObject {
 	[SerializeField]
 	private InputButtonCode[] _inputButtonCodes = Array.Empty<InputButtonCode>();
 
+	[SerializeField]
+	private AbilityColor[] _abilityColors = Array.Empty<AbilityColor>();
+
+	public Color inkDefaultColor;
+
+	public Color inkDisabledColor;
+
+	public Color inkErrorColor;
+
 	public ReadOnlyCollection<AbilityCode> AbilityCodes => new(_abilityCodes);
 
 	public ReadOnlyCollection<InputButtonCode> InputButtonCodes => new(_inputButtonCodes);
+
+	public ReadOnlyCollection<AbilityColor> AbilityColors => new(_abilityColors);
 }
