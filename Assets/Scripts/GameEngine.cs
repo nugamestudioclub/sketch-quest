@@ -38,6 +38,8 @@ public class GameEngine {
 		get => Paused ? _pausedTimeScale : 1f;
 	}
 
+	public float TemporaryAbilityDuration { get; private set; }
+
 	public GameEngine(GameConfig config) {
 		Bomb = GameObject.Instantiate(config.bomb);
 		Bomb.SetActive(false);
@@ -63,6 +65,8 @@ public class GameEngine {
 		Drawing = GameObject.Instantiate<Drawing>(config.drawing);
 
 		_pausedTimeScale = config.pausedTimeScale;
+
+		TemporaryAbilityDuration = config.temporaryAbilityDuration;
 	}
 
 	public void Awake() {

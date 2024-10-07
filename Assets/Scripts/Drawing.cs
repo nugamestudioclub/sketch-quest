@@ -227,11 +227,9 @@ public class Drawing : MonoBehaviour {
 		foreach( var edge in edges ) {
 			var image = edge.Image;
 			var code = edge.Code;
-			Debug.Log($"Draw edge '{code}'");
 			image.color = secondaryColor;
 			var span = pattern.Span;
 			foreach( var (start, end) in GetEdges(pattern) ) {
-				Debug.Log($"Draw Edge (start '{start}', end '{end}'");
 				if( code.Contains(start) && code.Contains(end) ) {
 					image.color = primaryColor;
 					var current = span[^1];

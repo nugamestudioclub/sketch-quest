@@ -41,4 +41,6 @@ public class GameConfig : ScriptableObject {
 	public ReadOnlyCollection<AbilityColor> AbilityColors => new(_abilityColors);
 
 	public float pausedTimeScale = 0.25f;
+
+	public float temporaryAbilityDuration = 30f;
 }
