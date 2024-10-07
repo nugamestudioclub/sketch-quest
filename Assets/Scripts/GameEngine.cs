@@ -40,6 +40,8 @@ public class GameEngine {
 
 	public float TemporaryAbilityDuration { get; private set; }
 
+	public int Stars { get; set; }
+
 	public GameEngine(GameConfig config) {
 		Bomb = GameObject.Instantiate(config.bomb);
 		Bomb.SetActive(false);
