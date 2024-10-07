@@ -1,10 +1,10 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class GameEngine {
+	private float _pausedTimeScale;
+
 	public InputData Input { get; } = new();
 	public GameLogic Logic { get; } = new();
 
@@ -32,6 +32,12 @@ public class GameEngine {
 
 	public AbilityCode AbilityInProgress { get; set; }
 
+	public bool Paused { get; set; }
+
+	public float TimeScale {
+		get => Paused ? _pausedTimeScale : 1f;
+	}
+
 	public GameEngine(GameConfig config) {
 		Bomb = GameObject.Instantiate(config.bomb);
 		Bomb.SetActive(false);
@@ -56,6 +62,7 @@ public class GameEngine {
 
 		Drawing = GameObject.Instantiate<Drawing>(config.drawing);
 
+		_pausedTimeScale = config.pausedTimeScale;
 	}
 
 	public void Awake() {

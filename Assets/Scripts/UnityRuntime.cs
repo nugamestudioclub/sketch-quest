@@ -9,12 +9,8 @@ public class UnityRuntime : MonoBehaviour {
 
 	public static GameEngine GameEngine { get; private set; }
 
-	[field: SerializeField]
-	private float TimeScale { get; set; } = 1f;
-
 	private void Awake() {
-		TimeScale = Time.timeScale;
-		fixedTimeStep = Time.fixedDeltaTime * TimeScale;
+		fixedTimeStep = Time.fixedDeltaTime * Time.timeScale;
 		GameEngine.Awake();
 	}
 
@@ -89,8 +85,13 @@ public class UnityRuntime : MonoBehaviour {
 
 	void LateUpdate() {
 		GameEngine.LateUpdate(Time.deltaTime);
-		Time.timeScale = TimeScale;
-		Time.fixedDeltaTime = fixedTimeStep * TimeScale;
+		var timeScale = GameEngine.TimeScale;
+		Time.timeScale = timeScale;
+		Time.fixedDeltaTime = fixedTimeStep * timeScale;
+	}
+
+	public static float UnscaledTime(float value) {
+		return value * GameEngine.TimeScale;
 	}
 
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

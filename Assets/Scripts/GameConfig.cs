@@ -7,7 +7,6 @@ using UnityEngine;
 	menuName = "Config/" + nameof(GameConfig))
 ]
 public class GameConfig : ScriptableObject {
-
 	public GameObject runtime;
 
 	public GameObject bomb;
@@ -40,4 +39,6 @@ public class GameConfig : ScriptableObject {
 	public ReadOnlyCollection<InputButtonCode> InputButtonCodes => new(_inputButtonCodes);
 
 	public ReadOnlyCollection<AbilityColor> AbilityColors => new(_abilityColors);
+
+	public float pausedTimeScale = 0.25f;
 }
