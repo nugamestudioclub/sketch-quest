@@ -826,6 +826,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dino
       objectReference: {fileID: 0}
+    - target: {fileID: 6738347478057699201, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.8260603
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738347478057699201, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0388504
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738347478057699201, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0262
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738347478057699201, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0825
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738347478057699201, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9640755
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738347478057699201, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.26562852
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738347478057699201, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -30.809
+      objectReference: {fileID: 0}
     - target: {fileID: 8120264967770020216, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.35
@@ -867,7 +895,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2197454216313237799, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
+    - {fileID: 8466267243371740342, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f3f0efe0618641418b29f7a9ef7b941, type: 3}

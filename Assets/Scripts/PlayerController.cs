@@ -88,7 +88,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void ClearExpiredAbilities() {
-		return;
 		if( unlockedBombTime <= 0 )
 			UnlockedBomb = false;
 		if( unlockedDashTime <= 0 )
@@ -111,6 +110,7 @@ public class PlayerController : MonoBehaviour {
 		if( !CanDash ) {
 			currentDashCooldown -= deltaTime;
 		}
+		return;
 		var abilityDuration = UnityRuntime.GameEngine.TemporaryAbilityDuration;
 		unlockedBombTime = Math.Clamp(unlockedBombTime - deltaTime, 0f, abilityDuration);
 		unlockedDashTime = Math.Clamp(unlockedDashTime - deltaTime, 0f, abilityDuration);

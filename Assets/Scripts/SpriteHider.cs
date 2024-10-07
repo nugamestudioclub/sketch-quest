@@ -7,6 +7,6 @@ public class SpriteHider : MonoBehaviour
 {
     private void Awake()
     {
-        GetComponent<SpriteRenderer>().enabled = false;
+        //GetComponent<SpriteRenderer>().enabled = false;
     }
 }
