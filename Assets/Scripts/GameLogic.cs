@@ -3,26 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.EventSystems.PointerEventData;
 
 public class GameLogic 
 {
+    public static Vector2 GetBombThrowOffset(PlayerController player)
+    {
+        float throwAngleRadians = Mathf.Deg2Rad * player.ThrowAngleDegrees;
+        float throwDirectionX = player.FacingRight ? math.cos(throwAngleRadians) : -math.cos(throwAngleRadians);
+        float throwDirectionY = math.sin(throwAngleRadians);
+        return new Vector2(throwDirectionX, throwDirectionY) * player.ThrowPower;
+   
+    }
+
+    public static Vector2 GetPlatformOffset(Vector2 origin, float degrees, float distance)
+    {
+        float radians = Mathf.Deg2Rad * degrees;
+        Vector2 offset = new Vector2(math.cos(radians), math.sin(radians)) * distance;
+        return origin + offset;
+    }
     public void ThrowBomb(PlayerController player, Summon bomb)
     {
-        Vector2 playerVelocity = player.Velocity;
-        bool playerFacingRight = player.FacingRight;
-        float throwPower = player.ThrowPower;
-        float throwAngleDegrees = player.ThrowAngleDegrees;
-        Vector2 playerPosition = player.Position;
+        Vector2 throwVector = GetBombThrowOffset(player);
+        Vector2 finalThrowVelocity = player.Velocity + throwVector;
 
-
-        float throwAngleRadians = Mathf.Deg2Rad* throwAngleDegrees;
-        float throwDirectionX = playerFacingRight ? math.cos(throwAngleRadians) : -math.cos(throwAngleRadians);
-        float throwDirectionY = math.sin(throwAngleRadians);
-        Vector2 throwVector = new Vector2(throwDirectionX, throwDirectionY) * throwPower;
-        Vector2 finalThrowVelocity = playerVelocity + throwVector;
-
-        bomb.Spawn(playerPosition);
-        bomb.Ignite(bomb.DefaultFuseLength);
+        bomb.Spawn(player.Position);
+        bomb.StartExpiring(bomb.DefaultFuseLength);
         bomb.Throw(finalThrowVelocity);
 
 	}

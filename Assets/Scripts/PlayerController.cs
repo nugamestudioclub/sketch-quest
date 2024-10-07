@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,9 +12,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashTime = 1;
     [SerializeField] private float groundCheckRadius;
     [SerializeField, Range(0, 1)] private float runningFalloff;
-    [field:SerializeField, Range(0, 360)] public float ThrowAngleDegrees { get; private set; } = 45;
-    [field:SerializeField] public float ThrowPower { get; private set; }
-    
+    [field: SerializeField, Range(0, 360)] public float ThrowAngleDegrees { get; private set; } = 45;
+    [field: SerializeField] public float ThrowPower { get; private set; }
+    [field: SerializeField] public float PlatformDistance { get; private set; } = 5;
+
     private float moveInputDirection;
     private bool tryingToJump;
     private bool tryingToDash;
@@ -62,19 +64,22 @@ public class PlayerController : MonoBehaviour
         moveInputDirection = input.HorizontalRaw;
         holdingJump = input[InputButton.Jump];
 
-		if( !tryingToJump ) {
+        if (!tryingToJump)
+        {
             tryingToJump = input.IsDown(InputButton.Jump);
-		}
+        }
 
-		if( !tryingToDash ) {
+        if (!tryingToDash)
+        {
             tryingToDash = input.IsDown(InputButton.Dash);
-		}
-        
-        if( !tryingToBomb ) {
+        }
+
+        if (!tryingToBomb)
+        {
             tryingToBomb = input.IsDown(InputButton.Bomb);
         }
-		HandleAnimation();
-	}
+        HandleAnimation();
+    }
 
     private void FixedUpdate()
     {
@@ -91,6 +96,7 @@ public class PlayerController : MonoBehaviour
         HandleDashing();
         HandleFacing();
         HandleBomb();
+        HandlePlatform();
 
         ClearStaleInputs();
     }
@@ -112,8 +118,8 @@ public class PlayerController : MonoBehaviour
         {
             currentDashCooldown -= Time.fixedDeltaTime;
         }
-        
-        
+
+
     }
     private void HandleRunning()
     {
@@ -132,6 +138,20 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(GroundCheckOffset(playerCollider), groundCheckRadius);
+
+        //draw bomb trajectory
+        Gizmos.color = Color.magenta;
+        var bombEndPos = GameLogic.GetBombThrowOffset(this);
+        Gizmos.DrawLine(Position, bombEndPos);
+        Gizmos.DrawWireSphere(bombEndPos, groundCheckRadius);
+
+        //draw platformSpawns
+        Gizmos.color = Color.blue;
+        int[] platformDegrees = { 30, 150, 210, 330 };
+        foreach (var degrees in platformDegrees)
+        {
+            Gizmos.DrawWireSphere(GameLogic.GetPlatformOffset(Position, degrees, PlatformDistance), groundCheckRadius);
+        }
     }
 
     private Vector2 GroundCheckOffset(Collider2D value)
@@ -201,7 +221,7 @@ public class PlayerController : MonoBehaviour
     private void HandleGrounded()
     {
         playerBody.gravityScale = risingGravity;
-        isGrounded = Physics2D.OverlapCircle(GroundCheckOffset(playerCollider), groundCheckRadius, LayerMask.GetMask("Ground"));
+        isGrounded = Physics2D.OverlapCircle(GroundCheckOffset(playerCollider), groundCheckRadius, ~LayerMask.GetMask("Player", "Switch"));
         if (isGrounded)
         {
             canDoubleJump = true;
@@ -266,5 +286,18 @@ public class PlayerController : MonoBehaviour
         UnityRuntime.GameEngine.Logic.ThrowBomb(this, bomb);
         currentBombCooldown = bombCooldown;
     }
-    
+
+    private void HandlePlatform()
+    {
+        GameEngine engine = UnityRuntime.GameEngine;
+        AbilityCode abilityCode = engine.AbilityInProgress;
+        if (abilityCode.ability == AbilityKind.Platform
+            && engine.TryGetInputButton(abilityCode.code[0], out var button))
+        {
+            Debug.Log($"Platform spawning");
+            engine.AbilityInProgress = default;
+            engine.SpawnPlatform(Position, button, PlatformDistance);
+        }
+    }
+
 }

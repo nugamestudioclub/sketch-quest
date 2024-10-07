@@ -49,11 +49,19 @@ public class Drawing : MonoBehaviour {
 				if( button != InputButton.None )
 					Draw(button);
 				var (any, ability) = GameLogic.CheckAbilityCode(Fragment);
-				Debug.Log($"any {any} ability {ability}");
+				//Debug.Log($"any {any} ability {ability}");
 				if( !any )
 					Fail();
-				else if( ability != AbilityKind.None )
+				else if( ability != AbilityKind.None)
+				{
+					UnityRuntime.GameEngine.AbilityInProgress = new()
+					{
+						ability = ability,
+						code = Fragment
+					};
 					Succeed();
+				}
+					
 			}
 		}
 		else {
@@ -179,6 +187,6 @@ public class Drawing : MonoBehaviour {
 	}
 
 	private void Succeed() {
-		Clear();
+        Clear();
 	}
 }

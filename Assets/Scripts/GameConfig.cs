@@ -14,7 +14,11 @@ public class GameConfig : ScriptableObject {
 
     public GameObject explosion;
 
-	[SerializeField]
+    public GameObject platform;
+
+	public GameObject platformPoof;
+
+    [SerializeField]
 	private AbilityCode[] _abilityCodes = Array.Empty<AbilityCode>();
 	
 	public Drawing drawing;

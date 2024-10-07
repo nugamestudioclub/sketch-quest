@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum ExplosionType
 {
-    Bomb, 
+    Bomb,
     Platform,
 }
 public class Explosion : MonoBehaviour
 {
+    [field: SerializeField]
+    public ExplosionType Type { get; private set; }
 
     private float detonationDuration;
     [SerializeField] private Animator animator;
@@ -23,15 +25,18 @@ public class Explosion : MonoBehaviour
     private void FixedUpdate()
     {
 
-        detonationDuration -= Time.fixedDeltaTime;
-        Collider2D hitCollider = Physics2D.OverlapCircle(transform.position, col2d.radius *col2d.gameObject.transform.localScale.x, LayerMask.GetMask("Switch"));
-        if (hitCollider)
+        if (Type == ExplosionType.Bomb)
         {
-            EventCollider eventCol = hitCollider.GetComponent<EventCollider>();
-            colliders.Add(eventCol);
-            eventCol.Collide(hitCollider);
+            Collider2D hitCollider = Physics2D.OverlapCircle(transform.position, col2d.radius * col2d.gameObject.transform.localScale.x, LayerMask.GetMask("Switch"));
+            if (hitCollider)
+            {
+                EventCollider eventCol = hitCollider.GetComponent<EventCollider>();
+                colliders.Add(eventCol);
+                eventCol.Collide(hitCollider);
+            }
         }
         
+        detonationDuration -= Time.fixedDeltaTime;
         if (detonationDuration <= 0)
         {
             Expire();
@@ -40,7 +45,7 @@ public class Explosion : MonoBehaviour
 
     public void Expire()
     {
-        foreach(var collider in colliders)
+        foreach (var collider in colliders)
         {
             collider.UnCollide(col2d);
         }
@@ -52,7 +57,8 @@ public class Explosion : MonoBehaviour
         detonationDuration = duration;
         transform.position = spawnLocaton;
         gameObject.SetActive(true);
-        animator.Play("BombExplode");
+        if (animator)
+            animator.Play("BombExplode");
     }
 
 }

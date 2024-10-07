@@ -1142,18 +1142,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7884685562353507938, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
-      propertyPath: <UnlockedBomb>k__BackingField
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7884685562353507938, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
-      propertyPath: <UnlockedDash>k__BackingField
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7884685562353507938, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
-      propertyPath: <UnlockedDoubleJump>k__BackingField
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8485771899660686448, guid: 2bb28b3b860a59d45b0c36f28e170ed5, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1181,11 +1169,11 @@ PrefabInstance:
       objectReference: {fileID: 780475221}
     - target: {fileID: 8268511037642977541, guid: e16ea4c3d9c97be4ab37b25df46ac11d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.25
+      value: 2.11
       objectReference: {fileID: 0}
     - target: {fileID: 8268511037642977541, guid: e16ea4c3d9c97be4ab37b25df46ac11d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.41
+      value: 0.77
       objectReference: {fileID: 0}
     - target: {fileID: 8268511037642977541, guid: e16ea4c3d9c97be4ab37b25df46ac11d, type: 3}
       propertyPath: m_LocalPosition.z

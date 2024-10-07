@@ -15,6 +15,8 @@ MonoBehaviour:
   runtime: {fileID: 4175297883929536807, guid: 11a1d395ce21323488dd59bd57b62f30, type: 3}
   bomb: {fileID: 5136883149831182101, guid: 0936e988aa35b7242891aca98967da47, type: 3}
   explosion: {fileID: 5136883149831182101, guid: da02f11b5d6f03c4c949ddc4a63f4b85, type: 3}
+  platform: {fileID: 43329106444797906, guid: 0969b3e106c2ad04b8fe0af11f8d2610, type: 3}
+  platformPoof: {fileID: 3956104798210938042, guid: 30afcbe4c69125746b5f807f0237522f, type: 3}
   _abilityCodes:
   - ability: 1
     code: WDQEA
