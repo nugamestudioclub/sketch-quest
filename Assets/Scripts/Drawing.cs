@@ -193,9 +193,10 @@ public class Drawing : MonoBehaviour
         var errorColor = gameEngine.InkErrorColor;
         var disabledColor = gameEngine.InkDisabledColor;
         var hiddenColor = Color.clear;
-        DrawPoints(_pointImages, Fragment.AsSpan(), errorColor, disabledColor);
+		DrawPoints(_pointImages, Fragment.AsSpan(), errorColor, disabledColor);
         DrawEdges(_edgeImages, Fragment.AsMemory(), errorColor, hiddenColor);
-        yield return new WaitForSeconds(UnityRuntime.UnscaledTime(hideDelay));
+		gameEngine.AudioBank.Play(gameEngine.Random.Next(6, 10));
+		yield return new WaitForSeconds(UnityRuntime.UnscaledTime(hideDelay));
         Hide();
     }
 
@@ -206,9 +207,10 @@ public class Drawing : MonoBehaviour
         gameEngine.TryGetColor(abilityInProgress.ability, out var abilityColor);
         var disabledColor = gameEngine.InkDisabledColor;
         var hiddenColor = Color.clear;
-        DrawPoints(_pointImages, Fragment.AsSpan(), abilityColor, disabledColor);
+		DrawPoints(_pointImages, Fragment.AsSpan(), abilityColor, disabledColor);
         DrawEdges(_edgeImages, Fragment.AsMemory(), abilityColor, hiddenColor);
-        yield return new WaitForSeconds(UnityRuntime.UnscaledTime(hideDelay));
+		gameEngine.AudioBank.Play(14);
+		yield return new WaitForSeconds(UnityRuntime.UnscaledTime(hideDelay));
         Hide();
     }
 
@@ -314,5 +316,5 @@ public class Drawing : MonoBehaviour
     {
         Finished = true;
         StartCoroutine(DoSucceed(abilityInProgress));
-    }
+	}
 }

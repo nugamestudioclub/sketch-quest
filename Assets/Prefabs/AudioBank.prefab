@@ -60,4 +60,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 613cb705b88fbc242b627c8851ec53ae, type: 3}
   - {fileID: 8300000, guid: c059d493cdea5f341bff7f376013bf4e, type: 3}
   - {fileID: 8300000, guid: 3bb542622718c424e8c531c18da1d204, type: 3}
+  - {fileID: 8300000, guid: 8fa930aa8c7b12145a6a7795f3ff6e92, type: 3}
+  - {fileID: 8300000, guid: a2c3094dc4c5bc74680d1b54073f0dfb, type: 3}
+  - {fileID: 8300000, guid: 25241508d7d39b044b5833e01a92aaf4, type: 3}
+  - {fileID: 8300000, guid: f7129e5b841d2cb45ae4506c9096557b, type: 3}
+  - {fileID: 8300000, guid: 34705f163adbb9d49ab202cd6ab8135e, type: 3}
+  - {fileID: 8300000, guid: 210d1716a3ae31043ba3b52c81d22735, type: 3}
+  - {fileID: 8300000, guid: a07b2f82190daf148bc5f0c5f1ba5c15, type: 3}
+  - {fileID: 8300000, guid: 7db77164ae2055e4886fd7522fe7b898, type: 3}
   <Players>k__BackingField: 5
