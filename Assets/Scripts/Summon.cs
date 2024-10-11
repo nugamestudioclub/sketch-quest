@@ -58,7 +58,9 @@ public class Summon : MonoBehaviour
         gameObject.SetActive(true);
         if (animator)
             animator.Play("BombIdle");
-    }
+		var gameEngine = UnityRuntime.GameEngine;
+		gameEngine.AudioBank.Play(gameEngine.Random.Next(15, 19));
+	}
 
     public void StartExpiring(float fuseLength)
     {
@@ -73,4 +75,12 @@ public class Summon : MonoBehaviour
         body.velocity = direction;
     }
 
+	void OnCollisionEnter2D(Collision2D collision) {
+		var layerMask = LayerMask.GetMask("Default", "Ground", "Switch");
+		var layer = collision.gameObject.layer;
+        if( (layerMask & (1 << layer)) != 0 ) {
+            var gameEngine = UnityRuntime.GameEngine;
+            gameEngine.AudioBank.Play(gameEngine.Random.Next(15, 19));
+        }
+	}
 }

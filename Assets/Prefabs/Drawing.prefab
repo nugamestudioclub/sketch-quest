@@ -3067,9 +3067,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coDeltaTime: 0.01
-  fadeDuration: 0.75
-  drawingDuration: 0.5
-  hideDelay: 0.75
+  fadeDuration: 0.333
+  drawingDuration: 0.25
+  hideDelay: 0.667
   <Fragment>k__BackingField: 
   _canvas: {fileID: 4045205514873253950}
 --- !u!1 &9142404458925850151

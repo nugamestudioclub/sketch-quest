@@ -189,6 +189,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJump()
     {
+        var gameEngine = UnityRuntime.GameEngine;
         if (tryingToJump)
         {
             if (isGrounded)
@@ -201,6 +202,7 @@ public class PlayerController : MonoBehaviour
                 Jump();
                 canDoubleJump = false;
                 isDoubleJumping = true;
+                gameEngine.AudioBank.Play(21);
             }
         }
     }
@@ -218,6 +220,8 @@ public class PlayerController : MonoBehaviour
         currentDashDuration = 0;
         playerBody.velocity = dashDirection;
         currentDashCooldown = dashCooldown;
+        var gameEngine = UnityRuntime.GameEngine;
+        gameEngine.AudioBank.Play(19);
     }
 
     private void HandleDashing()
