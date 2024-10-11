@@ -2164,6 +2164,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StaticPlatform (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 8297517995469261600, guid: 6540aa03cbd6fef419c28c111d8a0e48, type: 3}
+      propertyPath: m_RotationalOffset
+      value: 25.534
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -221,9 +221,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 274907782524401230}
-  - component: {fileID: 1897602710377370482}
   - component: {fileID: 8238182342549702195}
   - component: {fileID: 7884685562353507938}
+  - component: {fileID: 1714669049160697567}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -248,41 +248,6 @@ Transform:
   - {fileID: 5346787125651066266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &1897602710377370482
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8485771899660686448}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.005499999, y: -0.07034167}
-  m_Size: {x: 0.57000005, y: 0.87931764}
-  m_Direction: 0
 --- !u!50 &8238182342549702195
 Rigidbody2D:
   serializedVersion: 4
@@ -326,13 +291,13 @@ MonoBehaviour:
   moveSpeed: 10
   dashSpeed: 25
   dashTime: 0.2
-  groundCheckRadius: 0.8
+  groundCheckHeight: 0.5
   runningFalloff: 0.1
   <ThrowAngleDegrees>k__BackingField: 45
   <ThrowPower>k__BackingField: 12.5
   <PlatformDistance>k__BackingField: 3.5
   playerBody: {fileID: 8238182342549702195}
-  playerCollider: {fileID: 1897602710377370482}
+  playerCollider: {fileID: 1714669049160697567}
   spriteRenderer: {fileID: 183610148054478711}
   playerAnimator: {fileID: 8476743216966771974}
   fallingGravity: 8
@@ -344,3 +309,48 @@ MonoBehaviour:
   <UnlockedDoubleJump>k__BackingField: 0
   <UnlockedDash>k__BackingField: 0
   <UnlockedBomb>k__BackingField: 0
+--- !u!61 &1714669049160697567
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8485771899660686448}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.005499999, y: -0.07034167}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.25, y: 0.6}
+  m_EdgeRadius: 0.3
