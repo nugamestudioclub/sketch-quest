@@ -27,10 +27,8 @@ public class Collectible : MonoBehaviour {
 		case CollectibleKind.Star:
 			gameEngine.AudioBank.Play(14);
 			++gameEngine.Stars;
-
 			break;
 		case CollectibleKind.WinGame:
-			TransitionManager.ToCredits();
 			break;
 		}
 		Destroy(gameObject);

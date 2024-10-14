@@ -48,6 +48,8 @@ public class GameEngine {
 
 	public int Stars { get; set; }
 
+	private bool _hasLoaded;
+
 	public GameEngine(GameConfig config) {
 		Bomb = GameObject.Instantiate(config.bomb);
 		Bomb.SetActive(false);
@@ -95,24 +97,40 @@ public class GameEngine {
         Music.transform.parent = parent;
         Drawing.transform.parent = parent;
 		AudioBank.transform.parent = parent;
-
-
+		Load();
     }
 
-	public void Update(float deltaTime) {
+	public void Load() {
+		Stars = 0;
+		_hasLoaded = true;
+	}
+
+	private void Unload() {
+		_hasLoaded = false;
 	}
 
 	public void FixedUpdate(float deltaTime) {
-		
+		if( !_hasLoaded ) {
+			return;
+		}
+
+	}
+
+	public void Update(float deltaTime) {
+		if( !_hasLoaded ) {
+			return;
+		}
 	}
 
 	public void LateUpdate(float deltaTime) {
-        if (Stars >= 8)
-        {
-            TransitionManager.ToCredits();
-        }
-    }
-
+		if( !_hasLoaded ) {
+			return;
+		}
+		if( Stars >= 8 ) {
+			Unload();
+			TransitionManager.ToCredits();
+		}
+	}
 
 	public Summon SpawnBomb(Vector2 location)
 	{

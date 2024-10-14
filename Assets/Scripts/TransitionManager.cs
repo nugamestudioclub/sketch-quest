@@ -7,8 +7,9 @@ public class TransitionManager : MonoBehaviour
 {
     public static void ToMainScene()
     {
-        SceneManager.LoadScene("MainScene");
-    }
+		SceneManager.LoadScene("MainScene");
+		UnityRuntime.GameEngine.Load();
+	}
 
     public static void ToMainMenu()
     {
