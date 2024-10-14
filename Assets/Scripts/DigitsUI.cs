@@ -18,7 +18,9 @@ public class DigitsUI : MonoBehaviour {
 	}
 
 	public void Show(int value) {
+#if UNITY_EDITOR
 		_value = value;
+#endif
 		int maxDigits = _animators.Count;
 		int numberOfDigits = CountDigits(value);
 		if( value == 0 ) {
@@ -36,7 +38,7 @@ public class DigitsUI : MonoBehaviour {
 	}
 
 	private static int CountDigits(int value) {
-		return (int)Math.Floor(Math.Log10(value) + 1);
+		return (int)Math.Floor(Math.Log10(Math.Max(1, value)) + 1);
 	}
 
 	private void DrawAt(int position, int value) {

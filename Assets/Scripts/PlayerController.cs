@@ -62,10 +62,14 @@ public class PlayerController : MonoBehaviour
 
     private float unlockedDoubleJumpTime;
 
-    void Update()
+    [SerializeField]
+    private DigitsUI _starsUI;
+
+	void Update()
     {
         HandleInput();
         HandleAnimation();
+        HandleUI();
     }
 
     private void FixedUpdate()
@@ -164,6 +168,12 @@ public class PlayerController : MonoBehaviour
         {
             playerBody.velocity = new Vector2(Mathf.Lerp(currentXVelocity, 0, runningFalloff), playerBody.velocity.y);
         }
+    }
+
+    private void HandleUI() {
+        var gameEngine = UnityRuntime.GameEngine;
+        if( _starsUI != null )
+            _starsUI.Show(gameEngine.Stars);
     }
 
     private void OnDrawGizmosSelected()

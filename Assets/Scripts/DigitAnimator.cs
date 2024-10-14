@@ -16,7 +16,8 @@ public readonly struct DigitAnimator {
 		string name = value.ToString();
 		int layer = 0;
 		float time = frameOffset * Animator.GetCurrentAnimatorClipInfo(0)[0].clip.frameRate;
-		Animator.Play(name, layer, time);
+		if( !Animator.GetCurrentAnimatorStateInfo(0).IsName(name) )
+			Animator.Play(name, layer, time);
 	}
 
 	public void Show() {
