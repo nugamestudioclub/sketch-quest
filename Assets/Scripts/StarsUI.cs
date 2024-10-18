@@ -48,20 +48,6 @@ public class StarsUI : MonoBehaviour {
 		Animate(count, total);
 	}
 
-	private static IEnumerable<int> GetDigits(int value, int maxDigits) {
-		if( value == 0 ) {
-			yield return 0;
-		}
-		else {
-			int position = 0;
-			while( position < maxDigits && value > 0 ) {
-				int digit = value % 10;
-				value /= 10;
-				yield return digit;
-			}
-		}
-	}
-
 	private static void SetActive(Animator animator, bool value) {
 		animator.gameObject.SetActive(value);
 	}
@@ -80,10 +66,10 @@ public class StarsUI : MonoBehaviour {
 			var animator = _countAnimators[position++];
 			SetActive(animator, false);
 		}
-		Play(_separatorAnimator, "Slash", position: 0, frame);
+		Play(_separatorAnimator, "/", position: 0, frame);
 		maxDigits = _totalAnimators.Count;
 		position = 0;
-		foreach( int digit in GetDigits(total, maxDigits) ) {
+		foreach( int digit in GetDigits(count, maxDigits) ) {
 			var animator = _totalAnimators[position++];
 			SetActive(animator, true);
 			Play(animator, digit.ToString(), variety++, frame);
@@ -91,6 +77,20 @@ public class StarsUI : MonoBehaviour {
 		while( position < maxDigits ) {
 			var animator = _totalAnimators[position++];
 			SetActive(animator, false);
+		}
+	}
+
+	private static IEnumerable<int> GetDigits(int value, int maxDigits) {
+		if( value == 0 ) {
+			yield return 0;
+		}
+		else {
+			int position = 0;
+			while( position < maxDigits && value > 0 ) {
+				int digit = value % 10;
+				value /= 10;
+				yield return digit;
+			}
 		}
 	}
 

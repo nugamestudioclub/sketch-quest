@@ -19,7 +19,7 @@ MonoBehaviour:
   platformPoof: {fileID: 3956104798210938042, guid: 30afcbe4c69125746b5f807f0237522f, type: 3}
   music: {fileID: 7674822853108066538, guid: 0167522c45946ba48bd705c578132d75, type: 3}
   audioBank: {fileID: 957846000234888324, guid: 27d1955a51be01847b5891816ac846a2, type: 3}
-  maxStars: 123
+  maxStars: 8
   _abilityCodes:
   - ability: 1
     code: AEQDW
