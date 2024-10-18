@@ -62,8 +62,8 @@ public class PlayerController : MonoBehaviour
 
     private float unlockedDoubleJumpTime;
 
-    [SerializeField]
-    private DigitsUI _starsUI;
+	[SerializeField]
+	private StarsUI _starsUI;
 
 	void Update()
     {
@@ -173,8 +173,8 @@ public class PlayerController : MonoBehaviour
     private void HandleUI() {
         var gameEngine = UnityRuntime.GameEngine;
         if( _starsUI != null )
-            _starsUI.Show(gameEngine.Stars);
-    }
+            _starsUI.Show(gameEngine.Stars, gameEngine.MaxStars);
+	}
 
     private void OnDrawGizmosSelected()
     {

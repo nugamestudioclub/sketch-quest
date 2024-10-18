@@ -3,6 +3,8 @@ using System.Linq;
 using UnityEngine;
 
 public class GameEngine {
+	public readonly int MaxStars;
+
 	private float _pausedTimeScale;
 
 	public InputData Input { get; } = new();
@@ -82,6 +84,8 @@ public class GameEngine {
 		_pausedTimeScale = config.pausedTimeScale;
 
 		TemporaryAbilityDuration = config.temporaryAbilityDuration;
+
+		MaxStars = config.maxStars;
 	}
 
 	public void Awake() {
@@ -126,7 +130,7 @@ public class GameEngine {
 		if( !_hasLoaded ) {
 			return;
 		}
-		if( Stars >= 8 ) {
+		if( Stars >= MaxStars ) {
 			Unload();
 			TransitionManager.ToCredits();
 		}

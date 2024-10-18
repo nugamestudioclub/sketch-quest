@@ -21,6 +21,8 @@ public class GameConfig : ScriptableObject {
 
 	public GameObject audioBank;
 
+	public int maxStars;
+
     [SerializeField]
 	private AbilityCode[] _abilityCodes = Array.Empty<AbilityCode>();
 	
