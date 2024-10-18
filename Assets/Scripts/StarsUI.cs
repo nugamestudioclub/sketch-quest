@@ -60,19 +60,19 @@ public class StarsUI : MonoBehaviour {
 		foreach( int digit in GetDigits(count, maxDigits) ) {
 			var animator = _countAnimators[position++];
 			SetActive(animator, true);
-			Play(animator, digit.ToString(), variety++, frame);
+			Play(animator, digit.ToString(), variety += 2, frame);
 		}
 		while( position < maxDigits ) {
 			var animator = _countAnimators[position++];
 			SetActive(animator, false);
 		}
-		Play(_separatorAnimator, "/", position: 0, frame);
+		Play(_separatorAnimator, "Slash", position: 0, frame);
 		maxDigits = _totalAnimators.Count;
 		position = 0;
-		foreach( int digit in GetDigits(count, maxDigits) ) {
+		foreach( int digit in GetDigits(total, maxDigits) ) {
 			var animator = _totalAnimators[position++];
 			SetActive(animator, true);
-			Play(animator, digit.ToString(), variety++, frame);
+			Play(animator, digit.ToString(), variety += 2, frame);
 		}
 		while( position < maxDigits ) {
 			var animator = _totalAnimators[position++];
